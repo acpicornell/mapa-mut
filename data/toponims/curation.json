@@ -4,7 +4,9 @@
   "verdict": "ok"
  },
  "B01_3": {
-  "graf": "Port de Cāpos"
+  "graf": "Port de Cāpos",
+  "ngib": "Port de la Colònia de Sant Jordi",
+  "verdict": "pick"
  },
  "B01_4": {
   "ngib": "Rapita",
@@ -723,7 +725,7 @@
   "verdict": "ok"
  },
  "B01_1": {
-  "graf": "Cā Salmonia",
+  "graf": "Cª Salmonia",
   "ngib": "s'Almunia",
   "verdict": "pick"
  },
@@ -732,5 +734,21 @@
    "Torre de guaita"
   ],
   "verdict": "ok"
+ },
+ "B01_11": {
+  "verdict": "none"
+ },
+ "B01_23": {
+  "ngib": "Illa del Toro",
+  "verdict": "pick"
+ },
+ "B03_2": {
+  "graf": "Pūta dē Brotat",
+  "ngib": "Punta Amer",
+  "verdict": "pick"
+ },
+ "B03_8": {
+  "ngib": "Cap des Pinar",
+  "verdict": "pick"
  }
 }

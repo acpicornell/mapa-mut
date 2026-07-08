@@ -21,7 +21,7 @@ const portes = [
     <div class="hero__panel wrap">
       <h1>El mapa de Mallorca de Vicenç Mut</h1>
       <p class="lede">
-        L'<em>Insula Maioricae</em> que el cosmògraf i historiador mallorquí
+        L'<em>Insula Maioricae</em> que l'enginyer, astrònom i cronista mallorquí
         <strong>Vicenç Mut</strong> va gravar el <strong>1683</strong>: el segon dels grans
         mapes de l'illa, en un <strong>sol full</strong>. Aquí en llegim la
         <strong>toponímia</strong> sobre el gravat i la contrastem amb el Nomenclàtor Geogràfic
@@ -46,22 +46,6 @@ const portes = [
         <span class="go">{p.nom} →</span>
       </a>
     ))}
-  </section>
-
-  <section class="wrap intro">
-    <h2 class="seccio">El projecte</h2>
-    <p>
-      Aquest lloc és bessó del projecte sobre el mapa del Cardenal Despuig (1785), aplicat ara
-      al mapa anterior: el de Vicenç Mut. A diferència d'aquell, gravat en quatre planxes, el
-      de Mut és una <strong>làmina única</strong>, sense cens ni vinyetes de viles; per això el
-      lloc és més senzill i gira tot al voltant de la <strong>toponímia</strong>.
-    </p>
-    <p>
-      Pots navegar el <a href={url('gravat')}>gravat original amb zoom profund</a>, recórrer la
-      <a href={url('toponims')}> taula de topònims</a> i veure cada nom situat al
-      <a href={url('mapa')}> mapa</a>. A <a href={url('metode')}>El mètode</a> expliquem, pas a
-      pas, com s'han detectat, llegit, georeferenciat i identificat.
-    </p>
   </section>
 </Base>
 
@@ -100,10 +84,6 @@ const portes = [
   .porta h2 { margin: .7rem 0 .3rem; font-size: 1.25rem; }
   .porta p { margin: 0 0 1rem; font-size: .96rem; color: var(--ink-soft); flex: 1; }
   .porta .go { font-family: var(--display); color: var(--accent); font-size: .95rem; }
-
-  .seccio { font-family: var(--display); font-size: 1.05rem; letter-spacing: .03em; text-transform: uppercase; color: var(--sepia); border-bottom: 1px solid var(--line); padding-bottom: .4rem; margin: 1rem 0 1.2rem; }
-  .intro { margin-bottom: 3rem; }
-  .intro p { line-height: 1.75; max-width: 68ch; margin: 0 0 1rem; }
 
   @media (max-width: 760px) {
     .portes { grid-template-columns: 1fr; }

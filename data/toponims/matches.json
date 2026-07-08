@@ -1,13 +1,13 @@
 [
  {
   "id": "B01_1",
-  "nom": "Can Salmonia",
-  "graf": "Cā Salmonia",
+  "nom": "Cª Salmonia",
+  "graf": "Cª Salmonia",
   "tipus": "altre",
   "ordre": null,
   "dubte": false,
   "decision": "posicional",
-  "review": "revisat",
+  "review": "corregit",
   "ngib": "s'Almunia",
   "municipi": "Santanyí",
   "sim": 0.67,
@@ -34,12 +34,12 @@
   "tipus": "altre",
   "ordre": null,
   "dubte": false,
-  "decision": "suggerit",
-  "review": null,
-  "ngib": "Hort d'en Campos",
-  "municipi": "Campos",
-  "sim": 0.88,
-  "km": 11.65
+  "decision": "posicional",
+  "review": "corregit",
+  "ngib": "Port de la Colònia de Sant Jordi",
+  "municipi": "ses Salines",
+  "sim": 0.48,
+  "km": 2.18
  },
  {
   "id": "B01_4",
@@ -146,11 +146,11 @@
   "tipus": "altre",
   "ordre": null,
   "dubte": false,
-  "decision": "suggerit",
-  "review": null,
-  "ngib": "Pouet",
-  "municipi": "Valldemossa",
-  "sim": 1.0,
+  "decision": "sense",
+  "review": "revisat",
+  "ngib": null,
+  "municipi": null,
+  "sim": null,
   "km": null
  },
  {
@@ -314,12 +314,12 @@
   "tipus": "altre",
   "ordre": null,
   "dubte": false,
-  "decision": "sense",
-  "review": null,
-  "ngib": null,
-  "municipi": null,
-  "sim": 0.0,
-  "km": null
+  "decision": "posicional",
+  "review": "corregit",
+  "ngib": "Illa del Toro",
+  "municipi": "Calvià",
+  "sim": 0.38,
+  "km": 0.79
  },
  {
   "id": "B01_24",
@@ -729,17 +729,17 @@
  },
  {
   "id": "B03_2",
-  "nom": "Pūta dē Brorar",
-  "graf": "Pūta dē Brorar",
+  "nom": "Puta de Brotat",
+  "graf": "Pūta dē Brotat",
   "tipus": "altre",
   "ordre": null,
   "dubte": false,
-  "decision": "suggerit",
-  "review": null,
-  "ngib": "Punta d'en Barrufau",
-  "municipi": "Manacor",
-  "sim": 0.72,
-  "km": 11.71
+  "decision": "posicional",
+  "review": "corregit",
+  "ngib": "Punta Amer",
+  "municipi": "Sant Llorenç des Cardassar",
+  "sim": 0.57,
+  "km": 2.89
  },
  {
   "id": "B03_3",
@@ -818,12 +818,12 @@
   "tipus": "altre",
   "ordre": null,
   "dubte": false,
-  "decision": "sense",
-  "review": null,
-  "ngib": null,
-  "municipi": null,
-  "sim": 0.0,
-  "km": null
+  "decision": "posicional",
+  "review": "corregit",
+  "ngib": "Cap des Pinar",
+  "municipi": "Capdepera",
+  "sim": 0.6,
+  "km": 2.81
  },
  {
   "id": "B03_9",
