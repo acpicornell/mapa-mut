@@ -66,8 +66,24 @@ HEAD_LEGEND = {
 }
 
 
+# The engraving's nasal-abbreviation mark is a flat bar (macron): Sā = San,
+# Mōtesió = Montesió. Normalise any circumflex/tilde a vision reader may have used
+# for it to the macron, so the diplomatic grafia is consistent (ñ is a real letter,
+# left untouched).
+MACRON = {"â": "ā", "ê": "ē", "î": "ī", "ô": "ō", "û": "ū",
+          "ã": "ā", "ẽ": "ē", "ĩ": "ī", "õ": "ō", "ũ": "ū",
+          "Â": "Ā", "Ê": "Ē", "Î": "Ī", "Ô": "Ō", "Û": "Ū",
+          "Ã": "Ā", "Ẽ": "Ē", "Ĩ": "Ī", "Õ": "Ō", "Ũ": "Ū"}
+
+
+def macronize(s):
+    return "".join(MACRON.get(c, c) for c in (s or ""))
+
+
 def deacc(s):
-    for a, b in (("ô", "o"), ("â", "a"), ("î", "i"), ("ê", "e"), ("û", "u")):
+    for a, b in (("ô", "o"), ("â", "a"), ("î", "i"), ("ê", "e"), ("û", "u"),
+                 ("ā", "a"), ("ē", "e"), ("ī", "i"), ("ō", "o"), ("ū", "u"),
+                 ("ã", "a"), ("ẽ", "e"), ("ĩ", "i"), ("õ", "o"), ("ũ", "u")):
         s = s.replace(a, b)
     return s
 
@@ -118,7 +134,7 @@ def emit(windows, windir, prefix, out, seen, skip_steep=None):
         boxes = {b["n"]: b for b in json.load(open(f"{windir}/w{win['w']:02d}.json"))["words"]}
         for i, t in enumerate(win["toponims"]):
             pts = [boxes[n] for n in t["boxes"] if n in boxes]
-            graf = (t["reading"] or "").strip()
+            graf = macronize((t["reading"] or "").strip())
             if not pts or not graf:
                 continue
             if skip_steep is not None:
