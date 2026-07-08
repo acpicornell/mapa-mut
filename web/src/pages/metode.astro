@@ -1,0 +1,155 @@
+---
+import Base from '../layouts/Base.astro';
+import data from '../data/toponims.json';
+
+const DEC = {
+  confirmat: { label: 'Confirmat', color: '#2e7d32' },
+  probable: { label: 'Probable', color: '#3f7a8a' },
+  suggerit: { label: 'Suggerit', color: '#c2702f' },
+  posicional: { label: 'Posicional', color: '#8a8170' },
+  sense: { label: 'Sense', color: '#9a4a3a' },
+};
+
+const total = data.toponims.length;
+const perDec = data.comptador.perDecision || {};
+const pct = (n) => Math.round((n / total) * 100);
+const decOrder = ['confirmat', 'probable', 'suggerit', 'posicional', 'sense'];
+const georef = data.georef || {};
+const ambNgib = data.comptador.ambNgib || 0;
+const modelLabel = georef.model === 'poly1' ? 'afí (polinomi de primer grau)' : (georef.model ?? '—');
+---
+<Base title="El mètode" description="Com s'han detectat, llegit, georeferenciat i identificat els topònims del mapa de Vicenç Mut (1683): el procediment complet, d'un sol full.">
+  <article class="wrap metode">
+    <h1>El mètode</h1>
+    <p class="lede">
+      El mapa de Vicenç Mut amaga <strong>{total.toLocaleString('ca-ES')} topònims</strong> gravats en lletra
+      diminuta, amb una ortografia mallorquina de fa tres segles i mig. Aquesta pàgina explica, pas a pas, com
+      s'han <em>localitzat</em>, <em>llegit</em>, <em>situat sobre el territori</em> i <em>identificat</em> amb
+      el seu nom actual. És un procediment reproduïble, pensat perquè qualsevol pugui entendre'l —i, si vol,
+      repetir-lo.
+    </p>
+
+    <h2>Un sol full</h2>
+    <p>
+      A diferència del mapa del Cardenal Despuig (1785), gravat en quatre planxes, l'<em>Insula Maioricae</em>
+      de Mut és una <strong>làmina única</strong>. Això simplifica tot el procés: no cal cosir quadrants ni
+      arreglar el marge central buit d'un mapa de quatre fulls. Tot es treballa sobre <strong>una sola imatge</strong>
+      (el màster d'alta resolució de 3840×2849&nbsp;px) i un únic sistema de coordenades de píxel.
+    </p>
+
+    <ol class="steps">
+      <li>
+        <h3><span class="n">1</span> Detecció de paraules (l'<em>spotter</em>)</h3>
+        <p>
+          Un model de visió especialitzat en mapes històrics (<strong>mapKurator</strong>) recorre el gravat i
+          en detecta <strong>cada caixa de paraula</strong>: on hi ha lletres, encara que no sàpiga què hi diu.
+          Per a aquest projecte el detector s'ha portat a executar-se <strong>en local, sobre Apple&nbsp;Silicon</strong>
+          (backend Metal / <strong>MPS</strong>) en comptes de requerir una targeta gràfica CUDA, de manera que
+          tot el pas es fa en un Mac sense dependre del núvol.
+        </p>
+      </li>
+      <li>
+        <h3><span class="n">2</span> Lectura i agrupació (visió)</h3>
+        <p>
+          El detector és molt bo trobant text, però fluix llegint-lo. Per això les caixes es passen a un agent
+          de visió de <strong>Claude</strong>, que les agrupa en noms i els transcriu de manera
+          <strong>diplomàtica</strong> —respectant la grafia original: <em>Câ</em> (Can), <em>Sô</em> (Son),
+          accents i abreviatures incloses. També assigna a cada topònim el seu <strong>tipus</strong> segons el
+          que representa al gravat (predi o casa de camp, port, castell, talaia…).
+        </p>
+      </li>
+      <li>
+        <h3><span class="n">3</span> Punts de control (GCPs)</h3>
+        <p>
+          Sobre el gravat es marquen a mà <strong>19 punts de control</strong>: llocs identificables sense cap
+          dubte (12 de l'interior, immutables, i 7 de la costa, de confiança menor perquè els ports s'han
+          desplaçat amb el temps). A cada punt se li assignen les <strong>coordenades reals modernes</strong>
+          preses del gazetteer oficial <strong>NGIB</strong> (Nomenclàtor Geogràfic de les Illes Balears). Són
+          l'àncora de tota la georeferenciació.
+        </p>
+      </li>
+      <li>
+        <h3><span class="n">4</span> Georeferenciació afí global</h3>
+        <p>
+          Amb els punts de control (píxel ↔ coordenada real) s'ajusta una <strong>única transformació {modelLabel}
+          global</strong> que converteix qualsevol píxel del gravat en longitud i latitud. El mapa de 1683 és
+          antic i geomètricament irregular, de manera que un model senzill i robust captura la deformació general
+          sense sobreajustar-se. La qualitat es mesura amb validació <em>leave-one-out</em>: es deixa cada punt
+          de control fora de l'ajust i es prediu, i la desviació mediana resultant és
+          d'aproximadament <strong>{(georef.loo_median_m ?? 0).toLocaleString('ca-ES')}&nbsp;m</strong>. És l'error
+          típic esperable en situar un topònim sobre el territori.
+        </p>
+      </li>
+      <li>
+        <h3><span class="n">5</span> Identificació amb el nom actual (NGIB)</h3>
+        <p>
+          Finalment, cada topònim es compara amb el gazetteer NGIB per trobar-hi el seu equivalent modern. La
+          comparació de noms combina similitud difusa, un <strong>plec ortogràfic</strong> que apropa la grafia
+          mallorquina del set-cents a l'actual i una passada fonètica; la distància geogràfica (que ara sí
+          coneixem, gràcies a la georeferenciació) serveix per desfer empats entre homònims i per assenyalar
+          identificacions sospitoses. D'aquesta manera, {ambNgib.toLocaleString('ca-ES')} dels
+          {' '}{total.toLocaleString('ca-ES')} noms queden lligats a una forma oficial del Nomenclàtor.
+        </p>
+      </li>
+    </ol>
+
+    <h2>La confiança de cada nom</h2>
+    <p>
+      Cada topònim porta una etiqueta de <strong>confiança</strong> que resumeix com de fiable és la seva
+      identificació, de més a menys segura —
+      {decOrder.filter((d) => perDec[d]).map((d) => (
+        <span class="chip"><i style={`background:${DEC[d].color}`}></i>{DEC[d].label}</span>
+      ))}.
+      Va des de <em>Confirmat</em> (nom gairebé cert) fins a <em>Sense</em> (no s'ha trobat equivalent al NGIB).
+    </p>
+    <div class="bars">
+      {decOrder.filter((d) => perDec[d]).map((d) => (
+        <div class="bar">
+          <span class="lab"><i style={`background:${DEC[d].color}`}></i>{DEC[d].label}</span>
+          <span class="track"><span class="fill" style={`width:${pct(perDec[d])}%;background:${DEC[d].color}`}></span></span>
+          <span class="val">{perDec[d].toLocaleString('ca-ES')} · {pct(perDec[d])}%</span>
+        </div>
+      ))}
+    </div>
+
+    <h2>Les eines</h2>
+    <p class="tools">
+      <strong>mapKurator</strong> (detecció de text en mapes històrics, portat a Apple&nbsp;MPS) ·
+      <strong>Claude</strong> (lectura i agrupació per visió) ·
+      <strong>NGIB</strong> (coordenades i noms actuals) ·
+      Python científic (georeferenciació i aparellament) ·
+      Astro (aquest lloc web).
+    </p>
+  </article>
+</Base>
+
+<style>
+  .metode { max-width: 760px; }
+  .metode { padding-top: 1.2rem; }
+  .lede { font-size: 1.15rem; color: var(--ink-soft); margin: .4rem 0 2rem; }
+  .metode h2 { margin: 2.4rem 0 .6rem; }
+  .metode p { line-height: 1.65; }
+
+  .steps { list-style: none; counter-reset: none; padding: 0; margin: 1.4rem 0; display: grid; gap: 1.4rem; }
+  .steps > li { border-left: 2px solid var(--line); padding-left: 1.2rem; }
+  .steps h3 { display: flex; align-items: center; gap: .6rem; margin: 0 0 .4rem; font-size: 1.2rem; }
+  .steps .n { display: inline-grid; place-items: center; width: 1.8rem; height: 1.8rem; border-radius: 50%; background: var(--accent); color: #fff; font-size: .95rem; flex: none; }
+  .steps p { margin: 0; }
+
+  .chip { display: inline-flex; align-items: center; gap: .3rem; white-space: nowrap; margin: 0 .15rem; }
+  .chip i, .lab i { width: .75rem; height: .75rem; border-radius: 50%; display: inline-block; border: 1px solid rgba(40,30,20,.35); }
+
+  .bars { display: grid; gap: .5rem; margin: .8rem 0 1rem; }
+  .bar { display: grid; grid-template-columns: 9rem 1fr auto; align-items: center; gap: .8rem; font-size: .9rem; }
+  .lab { display: inline-flex; align-items: center; gap: .4rem; }
+  .track { height: .7rem; background: rgba(40,30,20,.08); border-radius: 999px; overflow: hidden; }
+  .fill { display: block; height: 100%; border-radius: 999px; }
+  .val { color: var(--ink-soft); font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+  .tools { color: var(--ink-soft); }
+
+  @media (max-width: 560px) {
+    .bar { grid-template-columns: 1fr; gap: .2rem; }
+    .track { order: 3; }
+  }
+</style>

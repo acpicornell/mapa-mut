@@ -1,0 +1,398 @@
+---
+import Base from '../layouts/Base.astro';
+import data from '../data/toponims.json';
+import { url } from '../lib/url.mjs';
+
+// Eix de CONFIANÇA (algorítmica).
+const DEC = {
+  confirmat: { label: 'Confirmat', color: '#2e7d32' },
+  probable: { label: 'Probable', color: '#3f7a8a' },
+  suggerit: { label: 'Suggerit', color: '#c2702f' },
+  posicional: { label: 'Posicional', color: '#8a8170' },
+  sense: { label: 'Sense', color: '#9a4a3a' },
+};
+// Eix de REVISIÓ (humana), ortogonal a la confiança.
+const REV = {
+  revisat: { label: 'Revisat a mà', icon: '✓' },
+  corregit: { label: 'Corregit a mà', icon: '✎' },
+};
+// Tipus = categories LITERALS de la llegenda del gravat (ja venen ben escrites a les dades);
+// TIP només dóna l'etiqueta visible de 'altre'. La resta es mostren tal qual (TIP[t] ?? t).
+const TIP = { altre: 'Altre' };
+
+const rows = data.toponims;
+// Ordres presents (per als selects), respectant l'ordre de la escala.
+const decOrder = ['confirmat', 'probable', 'suggerit', 'posicional', 'sense'].filter((d) => rows.some((r) => r.decision === d));
+// known TIP labels first, then any other tipus present in the data (the literal
+// engraving legend categories: Casa de campo ó Predio, Puerto, Castillo, Atalaya ó Torre…).
+const tipOrder = [
+  ...Object.keys(TIP).filter((t) => rows.some((r) => (r.tipus || []).includes(t))),
+  ...[...new Set(rows.flatMap((r) => r.tipus || []))].filter((t) => t && !(t in TIP)).sort((a, b) => a.localeCompare(b, 'ca')),
+];
+// Ordes religiosos (eix 2 de la llegenda) i municipis presents, per als selects.
+const ordreOrder = [...new Set(rows.flatMap((r) => r.ordre || []))].filter(Boolean).sort((a, b) => a.localeCompare(b, 'ca'));
+const munOrder = [...new Set(rows.map((r) => r.municipi).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'ca'));
+const hasOrdre = ordreOrder.length > 0;
+const hasReview = rows.some((r) => r.review);
+const fmtKm = (k) => (k == null ? '' : `${k.toFixed(1)} km`);
+---
+<Base title="Topònims" description="Taula dels topònims llegits sobre el mapa de Mallorca de Vicenç Mut (1683) i la seva equivalència al Nomenclàtor Geogràfic de les Illes Balears.">
+  <section class="wrap">
+    <h1>Els topònims del mapa</h1>
+    <p class="lede">
+      Lectura assistida per IA de visió dels noms gravats al mapa de Vicenç Mut (1683), contrastada
+      amb el <strong>Nomenclàtor Geogràfic de les Illes Balears</strong> (NGIB). La
+      <strong>confiança</strong> del creuament (algorítmica) va de <em>Confirmat</em> a <em>Sense</em>.
+      La grafia és diplomàtica (tal com es grava: <em>Câ</em> = Can, <em>Sô</em> = Son).
+      <strong>Prem qualsevol fila</strong> per veure el topònim al gravat original, amb zoom.
+    </p>
+
+    <div class="controls">
+      <input id="q" type="search" placeholder="Cerca grafia, nom, NGIB o municipi…" aria-label="Cerca" />
+      <select id="fdec" aria-label="Confiança">
+        <option value="">Tota confiança</option>
+        {decOrder.map((d) => <option value={d}>{DEC[d].label}</option>)}
+      </select>
+      <select id="ftip" aria-label="Tipus">
+        <option value="">Tots els tipus</option>
+        {tipOrder.map((t) => <option value={t}>{TIP[t] ?? t}</option>)}
+      </select>
+      {hasOrdre && (
+        <select id="ford" aria-label="Orde religiós">
+          <option value="">Tots els ordes</option>
+          {ordreOrder.map((o) => <option value={o}>{o}</option>)}
+        </select>
+      )}
+      <select id="fmun" aria-label="Municipi">
+        <option value="">Tots els municipis</option>
+        {munOrder.map((m) => <option value={m}>{m}</option>)}
+      </select>
+      <select id="fngib" aria-label="Match NGIB">
+        <option value="">Amb o sense NGIB</option>
+        <option value="si">Amb forma NGIB</option>
+        <option value="no">Sense match NGIB</option>
+      </select>
+      <select id="fkm" aria-label="Distància al NGIB">
+        <option value="">Tota distància</option>
+        <option value="lt1">&lt; 1 km</option>
+        <option value="1-3">1 – 3 km</option>
+        <option value="gt3">&gt; 3 km (sospitós)</option>
+      </select>
+      {hasReview && (
+        <select id="frev" aria-label="Revisió">
+          <option value="">Tota revisió</option>
+          <option value="any">Revisat a mà</option>
+          <option value="none">Sense revisar</option>
+          <option value="corregit">Corregit a mà</option>
+        </select>
+      )}
+      <button id="fclear" type="button" class="clear" hidden>Neteja ✕</button>
+      <span id="count" class="muted count"></span>
+    </div>
+
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr>
+            <th class="sortable" data-col="graf" aria-sort="none">Grafia (gravat)<span class="sar"></span></th>
+            <th class="sortable" data-col="nom" aria-sort="none">Lectura<span class="sar"></span></th>
+            <th class="sortable" data-col="tip" aria-sort="none">Tipus / orde<span class="sar"></span></th>
+            <th class="sortable" data-col="dec" aria-sort="none">Confiança<span class="sar"></span></th>
+            <th class="sortable" data-col="ngib" aria-sort="none">NGIB<span class="sar"></span></th>
+            <th class="sortable" data-col="mun" aria-sort="none">Municipi<span class="sar"></span></th>
+            <th class="sortable num" data-col="km" aria-sort="none">Dist.<span class="sar"></span></th>
+          </tr>
+        </thead>
+        <tbody id="rows">
+          {rows.map((r) => (
+            <tr class="row" tabindex="0" role="button" aria-label={`Veure ${r.graf} al gravat`}
+                data-dec={r.decision} data-tip={(r.tipus || []).join('|')} data-ord={(r.ordre || []).join('|')} data-rev={r.review ?? ''}
+                data-x={r.x} data-y={r.y} data-lon={r.lon ?? ''} data-lat={r.lat ?? ''}
+                data-graf={r.graf} data-nom={r.nom ?? ''} data-ngib={r.ngib ?? ''} data-mun={r.municipi ?? ''}
+                data-km={r.km ?? ''} data-sim={r.sim ?? ''} data-dubte={r.dubte ? '1' : ''}
+                data-text={`${r.graf} ${r.nom} ${r.ngib ?? ''} ${r.municipi ?? ''}`.toLowerCase()}>
+              <td class="graf">{r.graf}{r.dubte && <span class="dubte" title="lectura dubtosa">?</span>}</td>
+              <td>{r.nom}</td>
+              <td class="muted">
+                {(r.tipus || []).map((t) => TIP[t] ?? t).join(' · ')}
+                {(r.ordre || []).length > 0 && (r.ordre || []).map((o) => <span class="ordtag">{o}</span>)}
+              </td>
+              <td>
+                <span class="badge" style={`--c:${(DEC[r.decision] ?? {}).color ?? '#888'}`}>{(DEC[r.decision] ?? {}).label ?? r.decision}</span>
+                {r.review && <span class="rev" title={REV[r.review]?.label ?? r.review}>{REV[r.review]?.icon ?? '✓'}</span>}
+              </td>
+              <td>{r.ngib ?? <span class="muted">—</span>}</td>
+              <td class="muted">{r.municipi ?? ''}</td>
+              <td class="num muted">{fmtKm(r.km)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <div id="fx" class="fx" hidden>
+    <div class="fx__back" data-close></div>
+    <div class="fx__panel" role="dialog" aria-modal="true" aria-labelledby="fxgraf">
+      <button class="fx__close" data-close aria-label="Tanca">×</button>
+      <div class="fx__view" id="fxview"></div>
+      <aside class="fx__side">
+        <p class="fx__kicker" id="fxfull"></p>
+        <h2 id="fxgraf"></h2>
+        <p class="fx__nom" id="fxnom"></p>
+        <p class="fx__badges" id="fxbadges"></p>
+        <dl class="fx__meta" id="fxmeta"></dl>
+        <div class="fx__map" id="fxmap"></div>
+        <label class="fx__toggle"><input type="checkbox" id="fxcross" checked /> Marca el topònim amb una creu</label>
+      </aside>
+    </div>
+  </div>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script is:inline src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/openseadragon.min.js"></script>
+
+  <script is:inline define:vars={{ total: rows.length, DEC, TIP, REV, decOrder, dziUrl: url('map/mapa.dzi'), osdImg: 'https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/images/' }}>
+    (function () {
+      const q = document.getElementById('q');
+      const fdec = document.getElementById('fdec');
+      const ftip = document.getElementById('ftip');
+      const ford = document.getElementById('ford');
+      const fmun = document.getElementById('fmun');
+      const fngib = document.getElementById('fngib');
+      const fkm = document.getElementById('fkm');
+      const frev = document.getElementById('frev');
+      const fclear = document.getElementById('fclear');
+      const count = document.getElementById('count');
+      const tbody = document.getElementById('rows');
+      let trs = Array.from(tbody.children);
+      const DECRANK = {}; decOrder.forEach((d, i) => { DECRANK[d] = i; });
+
+      // ── Fitxa: visor del gravat + dades + mini-mapa ──
+      const fx = document.getElementById('fx');
+      const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+      let osd = null, lmap = null, lmark = null, markEl = null;
+
+      // Toggle de la creu (recorda la preferència)
+      const fxcross = document.getElementById('fxcross');
+      try { if (localStorage.getItem('fxcross') === '0') fxcross.checked = false; } catch (e) {}
+      function applyCross() { if (markEl) markEl.style.display = fxcross.checked ? '' : 'none'; }
+      fxcross.addEventListener('change', () => {
+        try { localStorage.setItem('fxcross', fxcross.checked ? '1' : '0'); } catch (e) {}
+        applyCross();
+      });
+
+      function fillSide(d) {
+        document.getElementById('fxfull').textContent = d.mun || '';
+        document.getElementById('fxgraf').textContent = d.graf + (d.dubte ? ' ?' : '');
+        document.getElementById('fxnom').textContent = (d.nom && d.nom !== d.graf) ? d.nom : '';
+        const dec = DEC[d.dec] || { label: d.dec, color: '#888' };
+        let badges = `<span class="badge" style="--c:${dec.color}">${esc(dec.label)}</span>`;
+        if (d.rev) { const r = REV[d.rev] || { label: d.rev, icon: '✓' }; badges += ` <span class="revb">${r.icon} ${esc(r.label)}</span>`; }
+        document.getElementById('fxbadges').innerHTML = badges;
+        const meta = [];
+        meta.push(['Tipus', (d.tip || '').split('|').filter(Boolean).map((t) => TIP[t] ?? t).join(' · ')]);
+        if (d.ord) meta.push(['Orde religiós', d.ord.split('|').filter(Boolean).join(' · ')]);
+        if (d.ngib) meta.push(['NGIB', d.ngib]);
+        if (d.mun) meta.push(['Municipi', d.mun]);
+        if (d.km) meta.push(['Distància al NGIB', (+d.km).toFixed(1) + ' km']);
+        if (d.lat && d.lon) meta.push(['Coordenades', (+d.lat).toFixed(5) + ', ' + (+d.lon).toFixed(5)]);
+        document.getElementById('fxmeta').innerHTML = meta.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join('');
+      }
+
+      function initViewer(x, y) {
+        if (osd) { osd.destroy(); osd = null; }
+        osd = OpenSeadragon({
+          id: 'fxview', prefixUrl: osdImg, tileSources: dziUrl,
+          showNavigator: false, gestureSettingsMouse: { clickToZoom: false },
+          minZoomImageRatio: 0.2, visibilityRatio: 0.5, animationTime: 0.4, immediateRender: true,
+        });
+        osd.addHandler('open', () => {
+          const size = osd.world.getItemAt(0).getContentSize();
+          const pt = osd.viewport.imageToViewportCoordinates(new OpenSeadragon.Point(x, y));
+          osd.viewport.zoomTo(size.x / 850, pt, true);
+          osd.viewport.panTo(pt, true);
+          markEl = document.createElement('div'); markEl.className = 'fxmark';
+          osd.addOverlay({ element: markEl, location: pt, placement: 'CENTER' });
+          applyCross();
+        });
+      }
+
+      function initMap(lat, lon) {
+        const box = document.getElementById('fxmap');
+        if (!lat || !lon) { box.style.display = 'none'; return; }
+        box.style.display = '';
+        if (!lmap) {
+          lmap = L.map('fxmap', { zoomControl: false, attributionControl: false, scrollWheelZoom: false, dragging: false });
+          L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { maxZoom: 19 }).addTo(lmap);
+          lmark = L.circleMarker([+lat, +lon], { radius: 6, color: '#fff', weight: 2, fillColor: '#c2702f', fillOpacity: 1 }).addTo(lmap);
+        } else { lmark.setLatLng([+lat, +lon]); }
+        lmap.setView([+lat, +lon], 14);
+        setTimeout(() => lmap.invalidateSize(), 60);
+      }
+
+      function openFx(tr) {
+        const d = tr.dataset;
+        fillSide(d);
+        fx.hidden = false;
+        document.body.style.overflow = 'hidden';
+        initViewer(+d.x, +d.y);
+        initMap(d.lat, d.lon);
+      }
+      function closeFx() {
+        fx.hidden = true; document.body.style.overflow = '';
+        if (osd) { osd.destroy(); osd = null; }
+      }
+      fx.addEventListener('click', (e) => { if (e.target.hasAttribute('data-close')) closeFx(); });
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !fx.hidden) closeFx(); });
+      for (const tr of trs) {
+        tr.addEventListener('click', () => openFx(tr));
+        tr.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openFx(tr); } });
+      }
+
+      const filters = [q, fdec, ftip, ford, fmun, fngib, fkm, frev].filter(Boolean);
+
+      function apply() {
+        const t = q.value.trim().toLowerCase();
+        const d = fdec.value, tp = ftip.value, od = ford ? ford.value : '', mn = fmun.value,
+          ng = fngib.value, km = fkm.value, rv = frev ? frev.value : '';
+        let shown = 0;
+        for (const tr of trs) {
+          const ds = tr.dataset;
+          const rev = ds.rev;
+          const revOk = !rv || (rv === 'any' ? !!rev : rv === 'none' ? !rev : rev === rv);
+          const ngOk = !ng || (ng === 'si' ? !!ds.ngib : !ds.ngib);
+          const dkm = ds.km === '' ? null : +ds.km;
+          const kmOk = !km || (dkm != null && (km === 'lt1' ? dkm < 1 : km === '1-3' ? (dkm >= 1 && dkm <= 3) : km === 'gt3' ? dkm > 3 : true));
+          const ok =
+            (!d || ds.dec === d) &&
+            (!tp || ds.tip.split('|').includes(tp)) &&
+            (!od || ds.ord.split('|').includes(od)) &&
+            (!mn || ds.mun === mn) &&
+            ngOk && kmOk && revOk &&
+            (!t || ds.text.includes(t));
+          tr.style.display = ok ? '' : 'none';
+          if (ok) shown++;
+        }
+        count.textContent = `mostrant ${shown.toLocaleString('ca-ES')} de ${total.toLocaleString('ca-ES')}`;
+        const active = filters.some((el) => el.value);
+        fclear.hidden = !active;
+      }
+      filters.forEach((el) => el.addEventListener('input', apply));
+      fclear.addEventListener('click', () => { filters.forEach((el) => { el.value = ''; }); apply(); });
+
+      // ── Ordenació per columna (clic a la capçalera; asc → desc → sense) ──
+      let sortCol = null, sortDir = 'asc';
+      function keyOf(tr, col) {
+        const ds = tr.dataset;
+        switch (col) {
+          case 'graf': return ds.graf || '';
+          case 'nom': return ds.nom || '';
+          case 'tip': return ds.tip ? ds.tip.split('|').map((x) => TIP[x] ?? x).join(' ') : '';
+          case 'dec': return DECRANK[ds.dec] != null ? DECRANK[ds.dec] : 99;
+          case 'ngib': return ds.ngib || '';
+          case 'mun': return ds.mun || '';
+          case 'km': return ds.km === '' ? null : +ds.km;
+          default: return '';
+        }
+      }
+      function cmp(a, b) {
+        const ka = keyOf(a, sortCol), kb = keyOf(b, sortCol);
+        const ea = (ka === '' || ka == null), eb = (kb === '' || kb == null);
+        if (ea && eb) return 0;
+        if (ea) return 1;            // buits sempre al final
+        if (eb) return -1;
+        const r = typeof ka === 'number' ? ka - kb : String(ka).localeCompare(String(kb), 'ca', { numeric: true });
+        return sortDir === 'desc' ? -r : r;
+      }
+      function applySort() {
+        if (!sortCol) return;
+        trs = trs.slice().sort(cmp);
+        const frag = document.createDocumentFragment();
+        trs.forEach((tr) => frag.appendChild(tr));
+        tbody.appendChild(frag);
+      }
+      document.querySelectorAll('th.sortable').forEach((th) => {
+        th.addEventListener('click', () => {
+          const col = th.dataset.col;
+          if (sortCol === col) { sortDir = sortDir === 'asc' ? 'desc' : 'asc'; }
+          else { sortCol = col; sortDir = 'asc'; }
+          document.querySelectorAll('th.sortable').forEach((o) => {
+            o.setAttribute('aria-sort', 'none');
+            o.querySelector('.sar').textContent = '';
+          });
+          th.setAttribute('aria-sort', sortDir === 'asc' ? 'ascending' : 'descending');
+          th.querySelector('.sar').textContent = sortDir === 'asc' ? ' ▲' : ' ▼';
+          applySort();
+        });
+      });
+
+      apply();
+    })();
+  </script>
+</Base>
+
+<style>
+  section:first-of-type { padding-top: 1.2rem; }
+  .controls { display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; margin: 1.5rem 0 1rem; }
+  .controls input, .controls select {
+    font-family: var(--serif); font-size: 1rem; padding: .4rem .6rem;
+    border: 1px solid var(--line); border-radius: 4px; background: rgba(255,255,255,.6); color: var(--ink);
+  }
+  .controls input { flex: 1 1 240px; }
+  .controls .clear { font-family: var(--serif); font-size: .9rem; padding: .4rem .7rem; border: 1px solid var(--line); border-radius: 4px; background: rgba(154,74,58,.1); color: var(--accent); cursor: pointer; }
+  .controls .clear:hover { background: rgba(154,74,58,.18); }
+  .count { margin-left: auto; font-size: .9rem; }
+
+  .tablewrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 4px; background: rgba(255,255,255,.35); }
+  table { border-collapse: collapse; width: 100%; font-size: .96rem; }
+  thead th { position: sticky; top: 0; background: var(--paper-2); text-align: left; font-family: var(--display); font-size: .82rem; letter-spacing: .03em; text-transform: uppercase; color: var(--sepia); padding: .55rem .7rem; border-bottom: 2px solid var(--line); }
+  thead th.sortable { cursor: pointer; user-select: none; white-space: nowrap; }
+  thead th.sortable:hover { background: var(--paper); color: var(--accent); }
+  thead th[aria-sort="ascending"], thead th[aria-sort="descending"] { color: var(--accent); }
+  .sar { font-size: .8em; }
+  .ordtag { display: inline-block; margin-left: .35rem; font-size: .72rem; padding: .04rem .4rem; border-radius: 3px; background: rgba(63,122,138,.16); color: #2f5f6b; white-space: nowrap; }
+  td { padding: .4rem .7rem; border-bottom: 1px solid rgba(201,183,143,.4); vertical-align: top; }
+  tbody tr:hover { background: rgba(255,255,255,.5); }
+  .graf { font-weight: 500; }
+  .dubte { color: var(--accent); font-weight: 700; margin-left: .2rem; }
+  .num { text-align: right; white-space: nowrap; }
+  .badge { display: inline-block; font-size: .76rem; padding: .08rem .5rem; border-radius: 999px; color: #fff; background: var(--c); white-space: nowrap; }
+  .rev { margin-left: .35rem; color: var(--accent); font-weight: 700; cursor: help; }
+  tbody tr.row { cursor: pointer; }
+  tbody tr.row:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+  @media (max-width: 720px) { .count { margin-left: 0; } }
+
+  /* ── Fitxa (modal) ── */
+  .fx[hidden] { display: none; }
+  .fx { position: fixed; inset: 0; z-index: 1000; display: grid; place-items: center; padding: clamp(.5rem, 3vw, 2rem); }
+  .fx__back { position: absolute; inset: 0; background: rgba(20,16,10,.62); backdrop-filter: blur(2px); }
+  .fx__panel { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(260px, 1fr); gap: 0;
+    width: min(1100px, 100%); height: min(78vh, 760px); background: var(--paper, #f3ead3); border: 1px solid var(--line);
+    border-radius: 8px; overflow: hidden; box-shadow: 0 16px 50px rgba(0,0,0,.4); }
+  .fx__view { background: #2a2622; min-height: 0; }
+  :global(.fxmark) { width: 30px; height: 30px; border-radius: 50%; box-sizing: border-box;
+    border: 2px solid #ffcf33; box-shadow: 0 0 0 2px rgba(0,0,0,.5), 0 0 14px rgba(255,207,51,.7); pointer-events: none; }
+  :global(.fxmark)::before, :global(.fxmark)::after { content: ''; position: absolute; background: #ffcf33; }
+  :global(.fxmark)::before { left: 50%; top: 5px; bottom: 5px; width: 2px; margin-left: -1px; }
+  :global(.fxmark)::after { top: 50%; left: 5px; right: 5px; height: 2px; margin-top: -1px; }
+  .fx__side { padding: 1.2rem 1.3rem; overflow-y: auto; border-left: 1px solid var(--line); }
+  .fx__kicker { margin: 0; font-family: var(--display); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); }
+  .fx__side h2 { margin: .2rem 0 .1rem; font-size: 1.5rem; }
+  .fx__nom { margin: 0 0 .6rem; color: var(--ink-soft); font-style: italic; }
+  .fx__badges { margin: 0 0 .9rem; }
+  .fx__badges .badge { display: inline-block; font-size: .76rem; padding: .1rem .55rem; border-radius: 999px; color: #fff; background: var(--c); }
+  .fx__badges .revb { margin-left: .4rem; font-size: .8rem; color: var(--accent); font-weight: 600; }
+  .fx__meta { display: grid; grid-template-columns: auto 1fr; gap: .25rem .8rem; margin: 0 0 1rem; font-size: .92rem; }
+  .fx__meta dt { color: var(--ink-soft); }
+  .fx__meta dd { margin: 0; }
+  .fx__map { height: 170px; border-radius: 6px; overflow: hidden; border: 1px solid var(--line); background: #e9e2cf; }
+  .fx__toggle { display: flex; align-items: center; gap: .45rem; margin: .8rem 0 0; font-size: .9rem; color: var(--ink-soft); cursor: pointer; }
+  .fx__toggle input { cursor: pointer; }
+  .fx__close { position: absolute; top: .4rem; right: .5rem; z-index: 2; width: 2rem; height: 2rem; border: 0; border-radius: 50%;
+    background: rgba(0,0,0,.5); color: #fff; font-size: 1.3rem; line-height: 1; cursor: pointer; }
+  @media (max-width: 760px) {
+    .fx__panel { grid-template-columns: 1fr; grid-template-rows: 48vh auto; height: min(88vh, 900px); }
+    .fx__side { border-left: 0; border-top: 1px solid var(--line); }
+  }
+</style>

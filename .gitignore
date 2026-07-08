@@ -1,0 +1,32 @@
+# Build output / deps / caches
+dist/
+.astro/
+node_modules/
+__pycache__/
+*.pyc
+.DS_Store
+.direnv/
+result
+
+# Local Claude Code settings
+.claude/
+
+# ---- Data & generated artifacts: NOT versioned (code only) ----
+# Raw map scans (large images), the GIMP master, and every pipeline artifact
+# (detections, windows, NGIB gazetteer, GCP/review crops, overlays, the
+# toponym/match/curation JSON). All local, all regenerable by running the pipeline.
+data/
+
+# Web data + generated visual assets (built by `npm run data` / `hero` / `map`).
+web/src/data/
+web/public/hero/
+web/public/map/
+web/public/vinetes/
+web/public/sheets/
+
+# Images / plots anywhere (kept out of the repo entirely)
+*.jpg
+*.jpeg
+*.png
+*.xcf
+*.dzi

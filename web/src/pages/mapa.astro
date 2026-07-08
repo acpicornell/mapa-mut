@@ -1,0 +1,124 @@
+---
+import Base from '../layouts/Base.astro';
+import data from '../data/toponims.json';
+import { url } from '../lib/url.mjs';
+
+const DEC = {
+  confirmat: { label: 'Confirmat', color: '#2e7d32' },
+  probable: { label: 'Probable', color: '#3f7a8a' },
+  suggerit: { label: 'Suggerit', color: '#c2702f' },
+  posicional: { label: 'Posicional', color: '#8a8170' },
+  sense: { label: 'Sense', color: '#9a4a3a' },
+};
+const TIP = { altre: 'Altre' };   // categories de la llegenda; la resta es mostren tal qual (TIP[t] ?? t)
+
+const decOrder = ['confirmat', 'probable', 'suggerit', 'posicional', 'sense'].filter((d) => data.toponims.some((r) => r.decision === d));
+const tipOrder = [
+  ...Object.keys(TIP).filter((t) => data.toponims.some((r) => (r.tipus || []).includes(t))),
+  ...[...new Set(data.toponims.flatMap((r) => r.tipus || []))].filter((t) => t && !(t in TIP)).sort((a, b) => a.localeCompare(b, 'ca')),
+];
+
+// Payload compacte: [lon, lat, decision, tipus, graf, nom, ngib, municipi]
+const pts = data.toponims
+  .filter((t) => t.lon != null && t.lat != null)
+  .map((t) => [+t.lon.toFixed(5), +t.lat.toFixed(5), t.decision, (t.tipus || []).join('|'), t.graf, t.nom, t.ngib || '', t.municipi || '']);
+const colors = Object.fromEntries(Object.entries(DEC).map(([k, v]) => [k, v.color]));
+---
+<Base title="Mapa" description="Mapa interactiu dels topònims del mapa de Vicenç Mut (1683) sobre cartografia actual: filtra per confiança i tipus.">
+  <section class="wrap maphead">
+    <div class="titlerow">
+      <h1>El mapa</h1>
+      <p class="muted small intro">Els topònims situats sobre cartografia actual. Per veure el gravat original, ves a <a href={url('gravat')}>El gravat →</a></p>
+    </div>
+
+    <div id="geo-controls" class="controls">
+      <input id="q" type="search" placeholder="Cerca grafia, nom o NGIB…" aria-label="Cerca" />
+      <select id="fdec" aria-label="Confiança"><option value="">Tota confiança</option>{decOrder.map((d) => <option value={d}>{DEC[d].label}</option>)}</select>
+      <select id="ftip" aria-label="Tipus"><option value="">Tots els tipus</option>{tipOrder.map((t) => <option value={t}>{TIP[t] ?? t}</option>)}</select>
+      <span id="count" class="muted count"></span>
+    </div>
+    <div id="geo-legend" class="legend">
+      {decOrder.map((d) => <span class="lg"><i style={`background:${DEC[d].color}`}></i>{DEC[d].label}</span>)}
+    </div>
+  </section>
+
+  <div class="wrap"><div id="geo" class="mapbox"></div></div>
+
+  <script type="application/json" id="pts" set:html={JSON.stringify(pts)}></script>
+  <script type="application/json" id="cfg" set:html={JSON.stringify({ colors })}></script>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script is:inline src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script is:inline>
+    (function () {
+      const pts = JSON.parse(document.getElementById('pts').textContent);
+      const cfg = JSON.parse(document.getElementById('cfg').textContent);
+      const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+      // ── Vista geogràfica (Leaflet) ──
+      let map, layer, geoReady = false;
+      const q = document.getElementById('q'), fdec = document.getElementById('fdec'),
+        ftip = document.getElementById('ftip'), count = document.getElementById('count');
+
+      function render() {
+        if (!layer) return;
+        layer.clearLayers();
+        const t = q.value.trim().toLowerCase(), d = fdec.value, tp = ftip.value;
+        let shown = 0;
+        for (const p of pts) {
+          const [lon, lat, dec, tip, graf, nom, ngib, mun] = p;
+          if (d && dec !== d) continue;
+          if (tp && !tip.split('|').includes(tp)) continue;
+          if (t && !((graf + ' ' + nom + ' ' + ngib + ' ' + mun).toLowerCase().includes(t))) continue;
+          const m = L.circleMarker([lat, lon], {
+            radius: 4, weight: 1, color: 'rgba(40,30,20,.55)', fillColor: cfg.colors[dec] || '#888', fillOpacity: 0.9,
+          });
+          m.bindPopup(
+            '<strong>' + esc(graf) + '</strong>' + (nom && nom !== graf ? ' <span style="opacity:.7">(' + esc(nom) + ')</span>' : '') +
+            '<br>' + (ngib ? 'NGIB: ' + esc(ngib) + (mun ? ' · ' + esc(mun) : '') : '<em>sense forma NGIB</em>')
+          );
+          m.addTo(layer);
+          shown++;
+        }
+        count.textContent = 'mostrant ' + shown.toLocaleString('ca-ES') + ' de ' + pts.length.toLocaleString('ca-ES');
+      }
+      function initGeo() {
+        if (geoReady) return; geoReady = true;
+        map = L.map('geo', { scrollWheelZoom: true, preferCanvas: true }).setView([39.62, 2.98], 10);
+        const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© OpenStreetMap' });
+        const sat = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { maxZoom: 19, attribution: 'Esri, Maxar' });
+        osm.addTo(map);
+        L.control.layers({ 'Mapa': osm, 'Satèl·lit': sat }).addTo(map);
+        layer = L.layerGroup().addTo(map);
+        render();
+      }
+      [q, fdec, ftip].forEach((el) => el.addEventListener('input', render));
+
+      initGeo();
+    })();
+  </script>
+</Base>
+
+<style>
+  .maphead { padding-top: 1.2rem; }
+  .titlerow { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .titlerow h1 { margin: 0; }
+  .intro { margin: 0; max-width: 42ch; }
+  .intro a { white-space: nowrap; }
+
+  .controls { display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; margin: 1rem 0 .6rem; }
+  .controls input, .controls select { font-family: var(--serif); font-size: 1rem; padding: .4rem .6rem; border: 1px solid var(--line); border-radius: 4px; background: rgba(255,255,255,.6); color: var(--ink); }
+  .controls input { flex: 1 1 240px; }
+  .count { margin-left: auto; font-size: .9rem; }
+
+  .legend { display: flex; flex-wrap: wrap; gap: .4rem 1rem; margin: 0 0 .8rem; font-size: .85rem; color: var(--ink-soft); }
+  .lg { display: inline-flex; align-items: center; gap: .35rem; }
+  .lg i { width: .8rem; height: .8rem; border-radius: 50%; border: 1px solid rgba(40,30,20,.4); display: inline-block; }
+  .lg .ring { background: transparent; border: 2px solid #1d6b2a; }
+  .lg.sep { border-left: 1px solid var(--line); padding-left: 1rem; }
+  .small { margin: 0 0 .8rem; }
+
+  .mapbox { width: 100%; height: min(72vh, 760px); border: 1px solid var(--line); border-radius: 4px; background: #e9e2cf; }
+
+  @media (max-width: 720px) { .count { margin-left: 0; } }
+</style>

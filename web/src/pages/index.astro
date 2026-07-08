@@ -1,0 +1,112 @@
+---
+import Base from '../layouts/Base.astro';
+import toponims from '../data/toponims.json';
+import { url } from '../lib/url.mjs';
+
+const nTopo = toponims.comptador.total;
+const ambNgib = toponims.comptador.ambNgib;
+const georef = toponims.georef || {};
+
+// Portes d'entrada a les seccions.
+const portes = [
+  { href: 'toponims', nom: 'Els topònims', xifra: nTopo.toLocaleString('ca-ES'), unitat: 'noms llegits', txt: 'La taula completa dels noms gravats, creuats amb el Nomenclàtor (NGIB).' },
+  { href: 'mapa', nom: 'El mapa', xifra: ambNgib.toLocaleString('ca-ES'), unitat: 'situats sobre el territori', txt: 'Els topònims col·locats sobre cartografia actual per longitud i latitud.' },
+  { href: 'estadistiques', nom: 'Estadístiques', xifra: `${georef.loo_median_m ?? '—'} m`, unitat: 'error del georeferenciat', txt: 'Recompte per confiança i per tipus, i la qualitat de l’ajust.' },
+];
+---
+<Base
+  title={null}
+  description="Els topònims del mapa de Mallorca de Vicenç Mut (Insula Maioricae, 1683), llegits sobre el gravat i contrastats amb el Nomenclàtor de les Illes Balears.">
+  <section class="hero" style={`--hero:url(${url('hero/mapa-hero.jpg')})`}>
+    <div class="hero__panel wrap">
+      <h1>El mapa de Mallorca de Vicenç Mut</h1>
+      <p class="lede">
+        L'<em>Insula Maioricae</em> que el cosmògraf i historiador mallorquí
+        <strong>Vicenç Mut</strong> va gravar el <strong>1683</strong>: el segon dels grans
+        mapes de l'illa, en un <strong>sol full</strong>. Aquí en llegim la
+        <strong>toponímia</strong> sobre el gravat i la contrastem amb el Nomenclàtor Geogràfic
+        de les Illes Balears.
+      </p>
+      <p class="lede sub">
+        Hem localitzat i llegit <strong>{nTopo}</strong> topònims amb un <em>spotter</em> de
+        detecció executat en local (Apple&nbsp;MPS) i lectura assistida per visió, els hem
+        situat sobre el territori amb una georeferenciació afí global i els hem enllaçat al seu
+        nom actual. <a href={url('metode')}>Com s'ha fet →</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="wrap portes">
+    {portes.map((p) => (
+      <a class="card porta" href={url(p.href)}>
+        <strong>{p.xifra}</strong>
+        <span class="unitat">{p.unitat}</span>
+        <h2>{p.nom}</h2>
+        <p>{p.txt}</p>
+        <span class="go">{p.nom} →</span>
+      </a>
+    ))}
+  </section>
+
+  <section class="wrap intro">
+    <h2 class="seccio">El projecte</h2>
+    <p>
+      Aquest lloc és bessó del projecte sobre el mapa del Cardenal Despuig (1785), aplicat ara
+      al mapa anterior: el de Vicenç Mut. A diferència d'aquell, gravat en quatre planxes, el
+      de Mut és una <strong>làmina única</strong>, sense cens ni vinyetes de viles; per això el
+      lloc és més senzill i gira tot al voltant de la <strong>toponímia</strong>.
+    </p>
+    <p>
+      Pots navegar el <a href={url('gravat')}>gravat original amb zoom profund</a>, recórrer la
+      <a href={url('toponims')}> taula de topònims</a> i veure cada nom situat al
+      <a href={url('mapa')}> mapa</a>. A <a href={url('metode')}>El mètode</a> expliquem, pas a
+      pas, com s'han detectat, llegit, georeferenciat i identificat.
+    </p>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    position: relative; overflow: hidden;
+    border-bottom: 1px solid var(--line);
+    display: flex; align-items: flex-end; min-height: 56vh;
+  }
+  /* mapa difuminat de fons */
+  .hero::before {
+    content: ''; position: absolute; inset: 0; z-index: 0;
+    background-image: var(--hero); background-size: cover; background-position: center 42%;
+    filter: blur(1.5px) saturate(.85) brightness(1.04);
+    transform: scale(1.04);
+  }
+  /* vel de pergamí sobre tot el mapa (més dens a baix, on hi ha el text) */
+  .hero::after {
+    content: ''; position: absolute; inset: 0; z-index: 1;
+    background: linear-gradient(to top, var(--paper) 2%, rgba(244,236,219,.82) 42%, rgba(244,236,219,.4) 100%);
+  }
+  .hero__panel {
+    position: relative; z-index: 2;
+    width: 100%; padding: 2.2rem 1.2rem;
+  }
+  .hero h1 { margin: 0 0 .6rem; }
+  .hero .lede { max-width: none; margin: 0 0 1.2rem; }
+  .hero .lede.sub { font-size: .96rem; color: var(--ink-soft); margin-bottom: 0; }
+  .hero .lede.sub a { white-space: nowrap; font-family: var(--display); }
+
+  .portes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; margin: 2.4rem auto; }
+  .porta { text-decoration: none; color: inherit; padding: 1.4rem 1.3rem; display: flex; flex-direction: column; transition: transform .12s, box-shadow .12s; }
+  .porta:hover { transform: translateY(-3px); box-shadow: 0 6px 18px var(--shadow); }
+  .porta strong { font-family: var(--display); font-size: 2.1rem; color: var(--accent); line-height: 1; }
+  .porta .unitat { font-size: .82rem; color: var(--ink-soft); text-transform: uppercase; letter-spacing: .04em; margin-top: .15rem; }
+  .porta h2 { margin: .7rem 0 .3rem; font-size: 1.25rem; }
+  .porta p { margin: 0 0 1rem; font-size: .96rem; color: var(--ink-soft); flex: 1; }
+  .porta .go { font-family: var(--display); color: var(--accent); font-size: .95rem; }
+
+  .seccio { font-family: var(--display); font-size: 1.05rem; letter-spacing: .03em; text-transform: uppercase; color: var(--sepia); border-bottom: 1px solid var(--line); padding-bottom: .4rem; margin: 1rem 0 1.2rem; }
+  .intro { margin-bottom: 3rem; }
+  .intro p { line-height: 1.75; max-width: 68ch; margin: 0 0 1rem; }
+
+  @media (max-width: 760px) {
+    .portes { grid-template-columns: 1fr; }
+    .hero { min-height: 44vh; }
+  }
+</style>

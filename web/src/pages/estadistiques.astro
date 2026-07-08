@@ -1,0 +1,200 @@
+---
+import Base from '../layouts/Base.astro';
+import topo from '../data/toponims.json';
+import { url } from '../lib/url.mjs';
+
+const DEC = {
+  confirmat: { label: 'Confirmat', color: '#2e7d32' },
+  probable: { label: 'Probable', color: '#3f7a8a' },
+  suggerit: { label: 'Suggerit', color: '#c2702f' },
+  posicional: { label: 'Posicional', color: '#8a8170' },
+  sense: { label: 'Sense match', color: '#9a4a3a' },
+};
+const TIP = { altre: 'Altre' };   // categories de la llegenda; la resta es mostren tal qual (TIP[t] ?? t)
+
+const rows = topo.toponims;
+const total = rows.length;
+const pct = (n, max) => `${Math.max(2, Math.round((n / max) * 100))}%`;
+const georef = topo.georef || {};
+const modelLabel = georef.model === 'poly1' ? 'afí' : (georef.model ?? '—');
+
+// ─────────── QUÈ CONTÉ EL GRAVAT ───────────
+// Tipus de lloc (categories literals de la llegenda).
+const tipStats = [...new Set(rows.flatMap((r) => r.tipus || []))]
+  .map((k) => ({ k, label: TIP[k] ?? k, n: rows.filter((r) => (r.tipus || []).includes(k)).length }))
+  .filter((t) => t.k && t.n > 0)
+  .sort((a, b) => b.n - a.n);
+// Topònims per municipi actual (densitat de noms; top 16).
+const munCount = {};
+for (const r of rows) if (r.municipi) munCount[r.municipi] = (munCount[r.municipi] || 0) + 1;
+const munStats = Object.entries(munCount).map(([k, n]) => ({ k, n })).sort((a, b) => b.n - a.n).slice(0, 16);
+const maxMun = munStats[0]?.n || 1;
+const nMun = Object.keys(munCount).length;
+
+// ─────────── EL NOSTRE PROCÉS ───────────
+const decStats = Object.keys(DEC)
+  .map((k) => ({ k, ...DEC[k], n: topo.comptador.perDecision[k] || 0 }))
+  .filter((d) => d.n > 0);
+const ambNgib = rows.filter((r) => r.ngib).length;
+const senseNgib = total - ambNgib;
+// Distància de cada topònim a la forma del NGIB (qualitat del georeferenciat).
+const withKm = rows.filter((r) => r.km != null);
+const KMB = [['< 0,5 km', 0, 0.5], ['0,5 – 1 km', 0.5, 1], ['1 – 2 km', 1, 2], ['2 – 5 km', 2, 5], ['> 5 km', 5, Infinity]];
+const kmStats = KMB.map(([k, lo, hi]) => ({ k, n: withKm.filter((r) => r.km >= lo && r.km < hi).length }));
+const maxKm = Math.max(...kmStats.map((s) => s.n), 1);
+const meanKm = withKm.length ? withKm.reduce((s, r) => s + r.km, 0) / withKm.length : 0;
+---
+<Base title="Estadístiques" description="Estadístiques del mapa de Vicenç Mut (1683): què conté el gravat (llocs i tipus) i com l'hem llegit, georeferenciat i validat.">
+  <section class="wrap">
+    <h1>Estadístiques</h1>
+    <p class="lede">Dues mirades: <strong>què conté el mapa de 1683</strong> i <strong>com l'hem llegit</strong>.</p>
+
+    <div class="kpis">
+      <div class="card kpi"><strong>{total.toLocaleString('ca-ES')}</strong><span>topònims llegits</span></div>
+      <div class="card kpi"><strong>{nMun}</strong><span>municipis actuals</span></div>
+      <div class="card kpi"><strong>{Math.round((ambNgib / total) * 100)}%</strong><span>amb forma NGIB</span></div>
+      <div class="card kpi"><strong>{(georef.loo_median_m ?? 0).toLocaleString('ca-ES')} m</strong><span>error del georeferenciat</span></div>
+    </div>
+  </section>
+
+  <!-- ═══════════ EL MAPA DE 1683 ═══════════ -->
+  <section class="wrap">
+    <div class="sectionhead">
+      <h2>El mapa de 1683</h2>
+      <p class="muted">Què hi ha gravat: els tipus de lloc i on cauen avui els noms.</p>
+    </div>
+  </section>
+
+  <section class="wrap cols2">
+    <div>
+      <h3>Topònims per tipus</h3>
+      <p class="muted small">Categories de la llegenda del gravat (casa de camp o predi, port, castell, talaia…).</p>
+      <ul class="bars">
+        {tipStats.map((t) => (
+          <li>
+            <span class="blab">{t.label}</span>
+            <span class="btrack"><span class="bfill" style={`width:${pct(t.n, tipStats[0].n)};background:var(--sepia)`}></span></span>
+            <span class="bval">{t.n.toLocaleString('ca-ES')}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div>
+      <h3>Topònims per municipi</h3>
+      <p class="muted small">On cauen avui els noms gravats (els {munStats.length} municipis amb més topònims, de {nMun}).</p>
+      <ul class="bars">
+        {munStats.map((m) => (
+          <li>
+            <span class="blab">{m.k}</span>
+            <span class="btrack"><span class="bfill" style={`width:${pct(m.n, maxMun)};background:var(--accent-soft)`}></span></span>
+            <span class="bval">{m.n.toLocaleString('ca-ES')}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- ═══════════ EL NOSTRE PROCÉS ═══════════ -->
+  <section class="wrap">
+    <div class="sectionhead">
+      <h2>El nostre procés de lectura</h2>
+      <p class="muted">Com hem llegit, georeferenciat i identificat cada nom del gravat. <a href={url('metode')}>Més detall →</a></p>
+    </div>
+    <div class="kpis">
+      <div class="card kpi"><strong>{Math.round((ambNgib / total) * 100)}%</strong><span>amb forma NGIB</span></div>
+      <div class="card kpi"><strong>{meanKm.toFixed(2)} km</strong><span>distància mitjana al NGIB</span></div>
+      <div class="card kpi"><strong>{modelLabel}</strong><span>model de georeferenciat</span></div>
+      <div class="card kpi"><strong>{georef.control_points ?? '—'}</strong><span>punts de control ajustats</span></div>
+    </div>
+  </section>
+
+  <section class="wrap cols2">
+    <div>
+      <h3>Topònims per confiança</h3>
+      <p class="muted small">Confiança algorítmica del creuament amb el Nomenclàtor (NGIB): nom + posició.</p>
+      <ul class="bars">
+        {decStats.map((d) => (
+          <li>
+            <span class="blab">{d.label}</span>
+            <span class="btrack"><span class="bfill" style={`width:${pct(d.n, total)};background:${d.color}`}></span></span>
+            <span class="bval">{d.n.toLocaleString('ca-ES')}</span>
+          </li>
+        ))}
+      </ul>
+
+      <h3>Creuament amb el NGIB</h3>
+      <p class="muted small">Quants noms s'han pogut lligar a una forma oficial del Nomenclàtor.</p>
+      <ul class="bars">
+        <li>
+          <span class="blab">Amb forma NGIB</span>
+          <span class="btrack"><span class="bfill" style={`width:${pct(ambNgib, total)};background:#2e7d32`}></span></span>
+          <span class="bval">{ambNgib.toLocaleString('ca-ES')}</span>
+        </li>
+        <li>
+          <span class="blab">Sense match</span>
+          <span class="btrack"><span class="bfill" style={`width:${pct(senseNgib, total)};background:#9a4a3a`}></span></span>
+          <span class="bval">{senseNgib.toLocaleString('ca-ES')}</span>
+        </li>
+      </ul>
+    </div>
+
+    <div>
+      <h3>Distància al NGIB</h3>
+      <p class="muted small">Separació entre el punt llegit i la forma oficial ({withKm.length.toLocaleString('ca-ES')} amb match; mitjana {meanKm.toFixed(2)} km).</p>
+      <ul class="bars">
+        {kmStats.map((s) => (
+          <li>
+            <span class="blab">{s.k}</span>
+            <span class="btrack"><span class="bfill" style={`width:${pct(s.n, maxKm)};background:var(--accent-soft)`}></span></span>
+            <span class="bval">{s.n.toLocaleString('ca-ES')}</span>
+          </li>
+        ))}
+      </ul>
+
+      <h3>La georeferenciació</h3>
+      <p class="muted small">Un sol ajust global sobre tot el full.</p>
+      <dl class="gr">
+        <div><dt>Model</dt><dd>{modelLabel === 'afí' ? 'Afí (polinomi de primer grau)' : modelLabel}</dd></div>
+        <div><dt>Punts de control</dt><dd>{georef.control_points ?? '—'} (de 19 marcats a mà)</dd></div>
+        <div><dt>Error (LOO median)</dt><dd>≈ {(georef.loo_median_m ?? 0).toLocaleString('ca-ES')} m</dd></div>
+      </dl>
+    </div>
+  </section>
+</Base>
+
+<style>
+  section:first-of-type { padding-top: 1.2rem; }
+  .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin: 1.5rem 0; }
+  .kpi { text-align: center; padding: 1.1rem .6rem; }
+  .kpi strong { display: block; font-family: var(--display); font-size: 1.9rem; color: var(--accent); }
+  .kpi span { font-size: .82rem; color: var(--ink-soft); }
+
+  .sectionhead { border-top: 2px solid var(--line); padding-top: 1.1rem; margin-top: 1.4rem; }
+  .sectionhead h2 { margin: 0 0 .2rem; font-size: 1.5rem; }
+  .sectionhead p { margin: 0; max-width: 60ch; }
+
+  .cols2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; align-items: start; }
+  h3 { margin: 1.6rem 0 .2rem; font-family: var(--display); font-size: 1.08rem; }
+  .cols2 > div > h3:first-child { margin-top: .6rem; }
+  .small { font-size: .88rem; margin-top: 0; }
+
+  .bars { list-style: none; padding: 0; margin: .7rem 0 0; display: grid; gap: .35rem; }
+  .bars li { display: grid; grid-template-columns: 9.5rem 1fr 3.2rem; align-items: center; gap: .6rem; font-size: .95rem; }
+  .blab { text-align: right; color: var(--ink-soft); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .btrack { background: rgba(201,183,143,.35); border-radius: 3px; height: 1.05rem; overflow: hidden; }
+  .bfill { display: block; height: 100%; border-radius: 3px; min-width: 2px; }
+  .bval { font-variant-numeric: tabular-nums; color: var(--ink); }
+
+  .gr { margin: .7rem 0 0; border: 1px solid var(--line); border-radius: 5px; overflow: hidden; background: rgba(255,255,255,.45); }
+  .gr > div { display: flex; justify-content: space-between; gap: 1rem; padding: .55rem .9rem; border-top: 1px solid var(--line); }
+  .gr > div:first-child { border-top: 0; }
+  .gr dt { color: var(--sepia); font-size: .9rem; }
+  .gr dd { margin: 0; font-variant-numeric: tabular-nums; }
+
+  @media (max-width: 820px) {
+    .kpis { grid-template-columns: 1fr 1fr; }
+    .cols2 { grid-template-columns: 1fr; }
+    .bars li { grid-template-columns: 7.5rem 1fr 3rem; }
+  }
+</style>

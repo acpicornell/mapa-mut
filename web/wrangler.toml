@@ -1,0 +1,8 @@
+# Cloudflare Workers (Static Assets) — serves the prebuilt Astro site in dist/.
+# Assets-only Worker (no server code).
+# Deploy: npm run deploy  (= astro build + wrangler deploy).
+name = "mapa-mut"
+compatibility_date = "2025-01-01"
+
+[assets]
+directory = "./dist"
