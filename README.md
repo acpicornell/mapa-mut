@@ -3,6 +3,8 @@
 Outreach project around the *Insula Maioricae* — the map of Mallorca engraved by
 **Vicenç Mut** in **1683** (`data/raw/Insula_Maioricae_Vicentius_Mut_1683.jpg`).
 
+**Live site:** <https://mapa-mut.cloudflare-d82.workers.dev>
+
 Modelled on the [despuig](https://github.com/acpicornell/despuig) project (the
 1785 Cardinal Despuig map) but adapted to a **single-sheet** map — Mut's engraving
 is one plate, so there are no NW/NE/SE/SW quadrants and the whole island is
@@ -14,10 +16,11 @@ curation tool — plus the **data pipeline** that feeds them.
 
 ## `web/` — the public website (Astro, static)
 
-The published site: a filterable/sortable table of the curated toponyms, an
-interactive **Mapa** (geographic layer + deep-zoom of the engraving), the method,
-and statistics. Catalan UI; readings kept in their original 1683 spelling. It is
-**self-contained**: it only reads the versioned JSON under `web/src/data/`.
+The published site: a filterable/sortable table of the **137** curated toponyms,
+an interactive **Mapa** (geographic layer + deep-zoom of the engraving), a page on
+the engraving itself (**El gravat**), the method, and statistics. Catalan UI;
+readings kept in their original 1683 spelling. It is **self-contained**: it only
+reads the versioned JSON under `web/src/data/`.
 
 ```bash
 cd web
@@ -66,6 +69,16 @@ provides the whole pipeline env (Python geometry/fuzzy/georef + Node). Enter it
 with `nix develop`. Text **detection** is delegated to the sibling Apple-Silicon
 port [`../mapkurator-mps`](https://github.com/acpicornell/mapkurator-mps) (no
 CUDA); `detect.sh` calls it. All repo content is in English.
+
+## `docs/` — background
+
+- [`vicenc-mut-1683-map.md`](docs/vicenc-mut-1683-map.md) — a cited research
+  dossier on Vicenç Mut and the 1683 *Insula Maioricae* (biography, authorship and
+  engravers, the *Notarū Explicatio* legend, editions and holdings, and the map's
+  place in Balearic cartography). It is the source of the historical text on the
+  site's **El gravat** page.
+- [`mapkurator-text-spotting.md`](docs/mapkurator-text-spotting.md) — notes on the
+  text-spotting detection step.
 
 ## Input data (`data/raw/`, hand-prepared in GIMP)
 
