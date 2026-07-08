@@ -26,22 +26,12 @@ import b_assemble as ba
 
 ROOT = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
 NGIB_MATCH = os.path.join(os.path.dirname(HERE), "ngib_match.py")
-# Hand-picked tipus from the curation tool = the LITERAL 1785 legend categories.
-VALID_TIPUS = {
-    "Ciudad", "Villa Parroquial", "Lugar grande", "Lugar chico", "Oratorio publico",
-    "Muchas casas separadas ó Establecimiento", "Dos ó tres casas", "Casa de campo ó Predio",
-    "Hermita", "Casa de estudios", "Castillo", "Atalaya ó Torre", "Guarda", "Bateria",
-    "Lugar donde se ha dado batalla", "Torrente", "Puente", "Puerto", "Punta", "Isla",
-    "Obispado", "Encomienda de Malta", "Colegiata", "Priorato ó Abadia", "Baronia", "Rafal",
-    "Pozos de nieve", "Olivares", "Viñas", "altre",
-}
-# Axis 2: religious orders (legend codes C/B/1–16). Stored in the separate `ordre` field.
-VALID_ORDRES = {
-    "Cartuxos", "Bernardos", "Dominicos", "Franciscos", "Agustinos", "Carmelitas",
-    "Trinitarios", "Mercenarios", "Minimos", "Capuchinos", "Hermitaños", "Concepcionistas",
-    "Geronimas", "Carmelitas descalzas", "Antonianos", "Cayetanos", "Clerigos de la Mision",
-    "Clerigos de S.n Phelipe Neri",
-}
+# Hand-picked tipus from the curation tool = the 8 classes of the Mut 1683 legend
+# ("Notarū Explicatio") + "altre".
+VALID_TIPUS = set(ba.MUT_TIPUS)
+# The Mut legend has no religious-order axis (that was despuig's 1785 map), so the
+# `ordre` field is unused here.
+VALID_ORDRES = set()
 
 
 def _norm_multi(v, valid):

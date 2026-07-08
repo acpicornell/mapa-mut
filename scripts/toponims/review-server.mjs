@@ -197,17 +197,11 @@ var DECORD={confirmat:5,probable:4,suggerit:3,posicional:2,sense:1};
 var COLS=[{k:'graf',t:'Grafia (gravat)'},{k:'nom',t:'Lectura'},{k:'tipus',t:'Tipus'},{k:'ordre',t:'Ordre'},
   {k:'decision',t:'Confiança'},{k:'ngib',t:'NGIB'},{k:'municipi',t:'Municipi'},{k:'km',t:'km',cls:'num'}];
 // Categories LITERALS de la llegenda del gravat (1785), tal com hi estan gravades.
-var TIPS=['Ciudad','Villa Parroquial','Lugar grande','Lugar chico','Oratorio publico',
-  'Muchas casas separadas ó Establecimiento','Dos ó tres casas','Casa de campo ó Predio',
-  'Hermita','Casa de estudios','Castillo','Atalaya ó Torre','Guarda','Bateria',
-  'Lugar donde se ha dado batalla','Torrente','Puente','Puerto','Punta','Isla',
-  'Obispado','Encomienda de Malta','Colegiata','Priorato ó Abadia','Baronia','Rafal',
-  'Pozos de nieve','Olivares','Viñas','altre'];
-// Eix 2: ordes religioses (codis de la llegenda C/B/1–16). Buit = cap orde.
-var ORDRES=['Cartuxos','Bernardos','Dominicos','Franciscos','Agustinos','Carmelitas',
-  'Trinitarios','Mercenarios','Minimos','Capuchinos','Hermitaños','Concepcionistas',
-  'Geronimas','Carmelitas descalzas','Antonianos','Cayetanos','Clerigos de la Mision',
-  'Clerigos de S.n Phelipe Neri'];
+// The 8 place classes of the Mut 1683 legend ("Notarū Explicatio") + "altre".
+var TIPS=['Bisbat','Abadia','Vila parroquial','Llogaret','Castell',"Casa d'estudis",
+  'Torre de guaita','Torre de senyals','Ciutat','altre'];
+// The Mut legend has no religious-order axis (that was despuig's 1785 map).
+var ORDRES=[];
 function tipSel(id,cur){var opts=TIPS.slice();if(cur&&opts.indexOf(cur)<0)opts.unshift(cur);return '<select class=etip data-id="'+id+'">'+opts.map(function(x){return '<option'+(x===cur?' selected':'')+'>'+esc(x)+'</option>';}).join('')+'</select>';}
 function ordSel(id,cur){var opts=ORDRES.slice();if(cur&&opts.indexOf(cur)<0)opts.unshift(cur);return '<select class=eord data-id="'+id+'"><option value=""'+(cur?'':' selected')+'>—</option>'+opts.map(function(x){return '<option'+(x===cur?' selected':'')+'>'+esc(x)+'</option>';}).join('')+'</select>';}
 var esc=function(s){return (s==null?'':''+s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});};

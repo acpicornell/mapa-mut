@@ -54,16 +54,23 @@ ORONIM = ("puig", "coll", "serra", "talaia", "talaya", "mola", "bec", "penyal",
           "mirador", "atalaya", "monte")
 HIDRO = ("font", "fuente", "pou", "estany", "sinia", "aljub", "cova", "cueva")
 
-# Head word -> LITERAL 1785 legend category (read from the name, not deduced).
-HEAD_LEGEND = {
-    "puerto": "Puerto", "port": "Puerto",
-    "punta": "Punta", "pta": "Punta",
-    "illa": "Isla", "isla": "Isla",
-    "torre": "Atalaya ó Torre", "atalaya": "Atalaya ó Torre",
-    "talaia": "Atalaya ó Torre", "talaya": "Atalaya ó Torre",
-    "castillo": "Castillo", "castell": "Castillo",
-    "torrent": "Torrente", "torrente": "Torrente",
-}
+# The 8 place classes of the Mut 1683 legend ("Notarū Explicatio"), plus "altre"
+# for coastal/geographic names the legend does not classify. Order = legend order.
+MUT_TIPUS = [
+    "Bisbat",           # Episcopatus
+    "Abadia",           # Abbatia
+    "Vila parroquial",  # Villa parochialis
+    "Llogaret",         # Pagus
+    "Castell",          # Castrum munitum
+    "Casa d'estudis",   # Domus studiorum
+    "Torre de guaita",  # Turres speculatoriae
+    "Torre de senyals",  # Turres ignibus navium admonitrices
+    "Ciutat",           # Civitas — Maiorica (Palma) & Alcudia
+    "altre",
+]
+# The two civitates of the island (only class the *name* can place; every other
+# class is shown by the drawn symbol, not the text, so it is set by hand).
+CITIES = {"mallorca", "palma", "alcudia", "alcvdia"}
 
 
 # The engraving's nasal-abbreviation mark is a flat bar (macron): Sā = San,
@@ -105,25 +112,20 @@ def normalize_nom(text):
 
 
 def tipus_of(k):
-    """ONLY literal 1785 legend categories. Anything the name can't place in the
-    legend is 'altre' (no invented groupings like nucli/costa/orònim/hidrònim)."""
+    """Mut's legend classes come from the drawn SYMBOL, not the name, so the name
+    can only place the two cities (and, trivially, castle names). Everything else
+    defaults to 'altre' for the human to set from the symbol during curation."""
     head = k.split()[0] if k else ""
-    if head in HEAD_LEGEND:
-        return HEAD_LEGEND[head]
-    if head in POSSES:
-        return "Casa de campo ó Predio"
+    if head in CITIES or k in CITIES:
+        return "Ciutat"
+    if head in ("castell", "castillo"):
+        return "Castell"
     return "altre"
 
 
 def tipus_for(graf, k):
-    """tipus_of + article 'Sa/Ses' → 'Casa de campo ó Predio', llegit de la grafia CRUA
-    (no la clau deaccentuada) per no confondre 'Sa' (article) amb 'Sâ' (= San, sant)."""
-    t = tipus_of(k)
-    if t == "altre":
-        w0 = (graf or "").strip().split()
-        if w0 and w0[0].lower().strip(".,") in ("sa", "ses"):
-            return "Casa de campo ó Predio"
-    return t
+    """Mut legend has no 'predi' class, so the grafia adds nothing over tipus_of."""
+    return tipus_of(k)
 
 
 def emit(windows, windir, prefix, out, seen, skip_steep=None):
