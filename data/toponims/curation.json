@@ -1,0 +1,736 @@
+{
+ "B01_2": {
+  "graf": "Cap de les Salinas",
+  "verdict": "ok"
+ },
+ "B01_3": {
+  "graf": "Port de Cāpos"
+ },
+ "B01_4": {
+  "ngib": "Rapita",
+  "verdict": "pick",
+  "tipus": [
+   "Torre de senyals"
+  ]
+ },
+ "B01_6": {
+  "ngib": "Cala Pi",
+  "verdict": "pick"
+ },
+ "B01_7": {
+  "verdict": "ok",
+  "tipus": [
+   "Vila parroquial"
+  ]
+ },
+ "B01_8": {
+  "verdict": "ok"
+ },
+ "B01_9": {
+  "ngib": "Cap de Regana",
+  "verdict": "pick"
+ },
+ "B01_10": {
+  "graf": "Cap Enderrocat",
+  "verdict": "ok"
+ },
+ "B01_12": {
+  "ngib": "Sant Jordi",
+  "verdict": "pick",
+  "tipus": [
+   "Llogaret"
+  ]
+ },
+ "B01_13": {
+  "ngib": "Illot de sa Galera",
+  "verdict": "pick"
+ },
+ "B01_14": {
+  "ngib": "Porto Pi",
+  "verdict": "pick",
+  "graf": "Pº Pi"
+ },
+ "B01_15": {
+  "ngib": "Castell de Sant Carles",
+  "verdict": "pick",
+  "tipus": [
+   "Castell"
+  ]
+ },
+ "B01_16": {
+  "ngib": "Fortí de ses Illetes",
+  "verdict": "pick",
+  "tipus": [
+   "Torre de guaita"
+  ]
+ },
+ "B01_17": {
+  "ngib": "Cala Portals Vells",
+  "verdict": "pick"
+ },
+ "B01_18": {
+  "ngib": "Cap de Cala Figuera",
+  "verdict": "pick"
+ },
+ "B01_19": {
+  "ngib": "Santa Maria del Camí",
+  "verdict": "pick",
+  "tipus": [
+   "Vila parroquial"
+  ]
+ },
+ "B01_20": {
+  "verdict": "ok",
+  "tipus": [
+   "Llogaret"
+  ]
+ },
+ "B01_21": {
+  "ngib": "Palma",
+  "verdict": "pick"
+ },
+ "B01_22": {
+  "graf": "Belver",
+  "ngib": "Bellver",
+  "verdict": "pick",
+  "tipus": [
+   "Castell"
+  ]
+ },
+ "B01_24": {
+  "graf": "Calvia",
+  "ngib": "Calvià",
+  "verdict": "pick",
+  "tipus": [
+   "Vila parroquial"
+  ]
+ },
+ "B01_25": {
+  "graf": "Sª. Ponsa",
+  "ngib": "Santa Ponça",
+  "verdict": "pick"
+ },
+ "B01_26": {
+  "graf": "Malgrat",
+  "ngib": "es Malgrats",
+  "verdict": "pick"
+ },
+ "B01_27": {
+  "verdict": "ok",
+  "tipus": [
+   "Llogaret"
+  ]
+ },
+ "B01_28": {
+  "ngib": "Esporles",
+  "verdict": "pick",
+  "tipus": [
+   "Vila parroquial"
+  ]
+ },
+ "B01_29": {
+  "ngib": "Andratx",
+  "verdict": "pick",
+  "tipus": [
+   "Vila parroquial"
+  ]
+ },
+ "B01_30": {
+  "ngib": "Cap Andritxol",
+  "verdict": "pick"
+ },
+ "B01_31": {
+  "ngib": "Bunyola",
+  "verdict": "pick",
+  "tipus": [
+   "Vila parroquial"
+  ]
+ },
+ "B01_32": {
+  "graf": "Purpuñent",
+  "ngib": "Puigpunyent",
+  "verdict": "pick",
+  "tipus": [
+   "Vila parroquial"
+  ]
+ },
+ "B02_1": {
+  "graf": "Porto Petro",
+  "verdict": "ok"
+ },
+ "B02_2": {
+  "graf": "Cª lōga",
+  "ngib": "Cala Llonga",
+  "verdict": "pick"
+ },
+ "B02_3": {
+  "graf": "Cª Figuera",
+  "verdict": "ok"
+ },
+ "B02_4": {
+  "graf": "Cª Satañi",
+  "ngib": "Cala Santanyí",
+  "verdict": "pick"
+ },
+ "B02_5": {
+  "graf": "S. Salvador",
+  "ngib": "Sant Salvador",
+  "verdict": "pick",
+  "tipus": [
+   "altre"
+  ]
+ },
+ "B02_6": {
+  "graf": "Sātañi",
+  "verdict": "ok",
+  "tipus": [
+   "Vila parroquial"
+  ]
+ },
+ "B02_7": {
+  "ngib": "Castell de Santueri",
+  "verdict": "pick",
+  "tipus": [
+   "Castell"
+  ]
+ },
+ "B02_8": {
+  "graf": "Cōsolacio",
+  "ngib": "Santuari de la Mare de Déu de la Consolació",
+  "verdict": "pick"
+ },
+ "B02_9": {
+  "ngib": "Felanitx",
+  "verdict": "pick",
+  "tipus": [
+   "Vila parroquial"
+  ]
+ },
+ "B02_10": {
+  "graf": "Villafrāca",
+  "ngib": "Vilafranca de Bonany",
+  "verdict": "pick",
+  "tipus": [
+   "Llogaret"
+  ]
+ },
+ "B02_11": {
+  "verdict": "ok",
+  "tipus": [
+   "Vila parroquial"
+  ]
+ },
+ "B02_12": {
+  "graf": "Mōtesió",
+  "ngib": "Monti-sion",
+  "verdict": "pick",
+  "tipus": [
+   "Casa d'estudis"
+  ]
+ },
+ "B02_13": {
+  "ngib": "Sant Joan",
+  "verdict": "pick",
+  "tipus": [
+   "Vila parroquial"
+  ]
+ },
+ "B02_14": {
+  "verdict": "ok",
+  "tipus": [
+   "Vila parroquial"
+  ]
+ },
+ "B02_15": {
+  "verdict": "ok",
+  "tipus": [
+   "Casa d'estudis"
+  ]
+ },
+ "B02_16": {
+  "verdict": "ok",
+  "tipus": [
+   "Vila parroquial"
+  ]
+ },
+ "B02_17": {
+  "verdict": "ok",
+  "tipus": [
+   "Vila parroquial"
+  ]
+ },
+ "B02_18": {
+  "ngib": "Lloret de Vistalegre",
+  "verdict": "pick",
+  "tipus": [
+   "Llogaret"
+  ]
+ },
+ "B02_19": {
+  "verdict": "ok",
+  "tipus": [
+   "Llogaret"
+  ]
+ },
+ "B03_1": {
+  "graf": "Porto Colō",
+  "ngib": "Portocolom",
+  "verdict": "pick"
+ },
+ "B03_3": {
+  "graf": "Cª Manacor",
+  "verdict": "ok"
+ },
+ "B03_4": {
+  "ngib": "Estany d'en Mas",
+  "verdict": "pick"
+ },
+ "B03_5": {
+  "graf": "Cā Magraner",
+  "ngib": "Cala Magraner",
+  "verdict": "pick"
+ },
+ "B03_6": {
+  "graf": "Cā Murada",
+  "verdict": "ok"
+ },
+ "B03_7": {
+  "verdict": "ok"
+ },
+ "B03_10": {
+  "graf": "Cap de Pera",
+  "ngib": "Far de Capdepera",
+  "verdict": "pick"
+ },
+ "B03_11": {
+  "graf": "Cervera",
+  "ngib": "Son Servera",
+  "verdict": "pick",
+  "tipus": [
+   "Llogaret"
+  ]
+ },
+ "B03_12": {
+  "ngib": "Cala Agulla",
+  "verdict": "pick",
+  "tipus": [
+   "Torre de senyals"
+  ]
+ },
+ "B03_13": {
+  "ngib": "Capdepera",
+  "verdict": "pick",
+  "tipus": [
+   "Castell"
+  ]
+ },
+ "B03_14": {
+  "verdict": "ok",
+  "tipus": [
+   "Llogaret"
+  ]
+ },
+ "B03_15": {
+  "verdict": "ok",
+  "tipus": [
+   "Vila parroquial"
+  ]
+ },
+ "B03_16": {
+  "ngib": "Sant Llorenç des Cardassar",
+  "verdict": "pick",
+  "tipus": [
+   "Llogaret"
+  ]
+ },
+ "B03_17": {
+  "verdict": "ok",
+  "tipus": [
+   "Vila parroquial"
+  ]
+ },
+ "B03_18": {
+  "graf": "Cª Torta",
+  "ngib": "Cala Torta",
+  "verdict": "pick"
+ },
+ "B03_19": {
+  "graf": "Cª Mitjana",
+  "verdict": "ok"
+ },
+ "B03_20": {
+  "graf": "Cª Estreta",
+  "ngib": "Cala Estreta",
+  "verdict": "pick"
+ },
+ "B03_21": {
+  "graf": "Cª Marsoc",
+  "ngib": "es Matzoc",
+  "verdict": "pick"
+ },
+ "B03_22": {
+  "verdict": "ok"
+ },
+ "B03_23": {
+  "verdict": "ok"
+ },
+ "B03_24": {
+  "verdict": "ok",
+  "tipus": [
+   "Vila parroquial"
+  ]
+ },
+ "B03_25": {
+  "graf": "Ariañy",
+  "verdict": "ok",
+  "tipus": [
+   "Llogaret"
+  ]
+ },
+ "B03_26": {
+  "ngib": "Santa Margalida",
+  "verdict": "pick",
+  "tipus": [
+   "Vila parroquial"
+  ]
+ },
+ "B03_27": {
+  "ngib": "Maria de la Salut",
+  "verdict": "pick",
+  "tipus": [
+   "Llogaret"
+  ]
+ },
+ "B04_1": {
+  "graf": "Muro",
+  "ngib": "Muro",
+  "verdict": "pick",
+  "tipus": [
+   "Vila parroquial"
+  ]
+ },
+ "B04_2": {
+  "verdict": "ok"
+ },
+ "B04_3": {
+  "verdict": "ok"
+ },
+ "B04_4": {
+  "verdict": "ok",
+  "tipus": [
+   "Vila parroquial"
+  ]
+ },
+ "B04_5": {
+  "verdict": "ok"
+ },
+ "B04_6": {
+  "ngib": "Alcúdia",
+  "verdict": "pick"
+ },
+ "B04_7": {
+  "graf": "Cª Murta",
+  "ngib": "Cala Murta",
+  "verdict": "pick"
+ },
+ "B04_9": {
+  "ngib": "Pollença",
+  "verdict": "pick",
+  "tipus": [
+   "Vila parroquial"
+  ]
+ },
+ "B04_10": {
+  "ngib": "Cap de Formentor",
+  "verdict": "pick"
+ },
+ "B04_11": {
+  "ngib": "el Colomer",
+  "verdict": "pick"
+ },
+ "B04_12": {
+  "ngib": "la Nau",
+  "verdict": "pick"
+ },
+ "B04_13": {
+  "graf": "Cª. S. Vicēs",
+  "ngib": "Cala Sant Vicenç",
+  "verdict": "pick"
+ },
+ "B04_14": {
+  "graf": "Cassellas"
+ },
+ "B04_16": {
+  "graf": "Castell de Pollēnsa",
+  "ngib": "Castell del Rei",
+  "verdict": "pick"
+ },
+ "B05_1": {
+  "graf": "Castelluibi",
+  "ngib": "Llubí",
+  "verdict": "pick",
+  "tipus": [
+   "Llogaret"
+  ]
+ },
+ "B05_2": {
+  "graf": "Costitx",
+  "verdict": "ok",
+  "tipus": [
+   "Llogaret"
+  ]
+ },
+ "B05_3": {
+  "ngib": "Santa Magdalena",
+  "verdict": "pick",
+  "tipus": [
+   "Casa d'estudis"
+  ]
+ },
+ "B05_4": {
+  "verdict": "ok",
+  "tipus": [
+   "Vila parroquial"
+  ]
+ },
+ "B05_5": {
+  "graf": "Sāsellas",
+  "ngib": "Sencelles",
+  "verdict": "pick",
+  "tipus": [
+   "Vila parroquial"
+  ]
+ },
+ "B05_6": {
+  "ngib": "Santa Eugènia",
+  "verdict": "pick",
+  "tipus": [
+   "Vila parroquial"
+  ]
+ },
+ "B05_7": {
+  "verdict": "ok",
+  "tipus": [
+   "Llogaret"
+  ]
+ },
+ "B05_8": {
+  "verdict": "ok",
+  "tipus": [
+   "Llogaret"
+  ]
+ },
+ "B05_9": {
+  "graf": "Selva",
+  "ngib": "Selva",
+  "verdict": "pick",
+  "tipus": [
+   "Vila parroquial"
+  ]
+ },
+ "B05_10": {
+  "ngib": "Mancor de la Vall",
+  "verdict": "pick",
+  "tipus": [
+   "Llogaret"
+  ]
+ },
+ "B05_11": {
+  "verdict": "ok",
+  "tipus": [
+   "Llogaret"
+  ]
+ },
+ "B05_12": {
+  "graf": "Binisalē",
+  "verdict": "ok",
+  "tipus": [
+   "Vila parroquial"
+  ]
+ },
+ "B05_13": {
+  "graf": "Cōsell",
+  "verdict": "ok",
+  "tipus": [
+   "Llogaret"
+  ]
+ },
+ "B05_14": {
+  "graf": "Cāpaner",
+  "ngib": "Campanet",
+  "verdict": "pick",
+  "tipus": [
+   "Vila parroquial"
+  ]
+ },
+ "B05_15": {
+  "verdict": "ok",
+  "tipus": [
+   "Llogaret"
+  ]
+ },
+ "B05_16": {
+  "graf": "Ayamās",
+  "ngib": "Aiamans",
+  "verdict": "pick",
+  "tipus": [
+   "Llogaret"
+  ]
+ },
+ "B05_17": {
+  "verdict": "ok",
+  "tipus": [
+   "Vila parroquial"
+  ]
+ },
+ "B05_18": {
+  "graf": "N.S. lluch",
+  "ngib": "Lluc",
+  "verdict": "pick"
+ },
+ "B05_19": {
+  "verdict": "ok",
+  "tipus": [
+   "Vila parroquial"
+  ]
+ },
+ "B05_20": {
+  "verdict": "ok",
+  "tipus": [
+   "Llogaret"
+  ]
+ },
+ "B05_21": {
+  "verdict": "ok",
+  "tipus": [
+   "Llogaret"
+  ]
+ },
+ "B05_22": {
+  "verdict": "ok",
+  "tipus": [
+   "Vila parroquial"
+  ]
+ },
+ "B05_23": {
+  "verdict": "ok"
+ },
+ "B05_24": {
+  "graf": "la Mola",
+  "ngib": "Mola de Can Palou",
+  "verdict": "pick",
+  "tipus": [
+   "Torre de senyals"
+  ]
+ },
+ "B05_25": {
+  "ngib": "Cala Tuent",
+  "verdict": "pick"
+ },
+ "B05_26": {
+  "verdict": "ok",
+  "tipus": [
+   "Torre de guaita"
+  ]
+ },
+ "B05_27": {
+  "graf": "Pedra Picada",
+  "ngib": "Torre Picada",
+  "verdict": "pick",
+  "tipus": [
+   "Castell"
+  ]
+ },
+ "B05_28": {
+  "graf": "Pº Soller",
+  "ngib": "Port de Sóller",
+  "verdict": "pick"
+ },
+ "B06_1": {
+  "ngib": "Deià",
+  "verdict": "pick",
+  "tipus": [
+   "Vila parroquial"
+  ]
+ },
+ "B06_2": {
+  "verdict": "ok",
+  "tipus": [
+   "Vila parroquial"
+  ]
+ },
+ "B06_3": {
+  "graf": "Pº. Andraig",
+  "ngib": "Port d'Andratx",
+  "verdict": "pick"
+ },
+ "B06_4": {
+  "ngib": "Banyalbufar",
+  "verdict": "pick",
+  "tipus": [
+   "Vila parroquial"
+  ]
+ },
+ "B06_5": {
+  "verdict": "pick",
+  "ngib": "Estellencs",
+  "tipus": [
+   "Vila parroquial"
+  ]
+ },
+ "B06_6": {
+  "ngib": "es Falcons",
+  "verdict": "pick"
+ },
+ "B06_7": {
+  "ngib": "Sant Elm",
+  "verdict": "pick",
+  "tipus": [
+   "Torre de guaita"
+  ]
+ },
+ "B06_8": {
+  "verdict": "ok"
+ },
+ "B06_9": {
+  "verdict": "ok"
+ },
+ "B06_10": {
+  "ngib": "es Cavall",
+  "verdict": "pick"
+ },
+ "B06_11": {
+  "ngib": "Torre des Verger",
+  "verdict": "pick",
+  "tipus": [
+   "Torre de guaita"
+  ]
+ },
+ "B06_12": {
+  "ngib": "Penyals de s'Evangèlica",
+  "verdict": "pick",
+  "tipus": [
+   "Torre de guaita"
+  ]
+ },
+ "B06_13": {
+  "graf": "Cap dē Groller"
+ },
+ "B06_14": {
+  "verdict": "ok"
+ },
+ "B06_15": {
+  "verdict": "ok"
+ },
+ "B01_1": {
+  "graf": "Cā Salmonia",
+  "ngib": "s'Almunia",
+  "verdict": "pick"
+ },
+ "B01_5": {
+  "tipus": [
+   "Torre de guaita"
+  ],
+  "verdict": "ok"
+ }
+}

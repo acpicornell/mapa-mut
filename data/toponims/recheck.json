@@ -1,0 +1,482 @@
+[
+ {
+  "id": "B01_3",
+  "graf": "Port de Cāpos",
+  "nom": "Port de Cāpos",
+  "tipus": "altre",
+  "subtile": "",
+  "x": 2496,
+  "y": 400,
+  "decision": "suggerit",
+  "candidates": [
+   {
+    "grafia": "Hort d'en Campos",
+    "municipi": "Campos",
+    "km": 11.53,
+    "sim": 0.88
+   },
+   {
+    "grafia": "Hort d'en Campos",
+    "municipi": "Campos",
+    "km": 11.65,
+    "sim": 0.88
+   },
+   {
+    "grafia": "Cas Perets",
+    "municipi": "ses Salines",
+    "km": 6.8,
+    "sim": 0.78
+   },
+   {
+    "grafia": "es Cap de sa Paret",
+    "municipi": "Santanyí",
+    "km": 11.26,
+    "sim": 0.83
+   },
+   {
+    "grafia": "Hort d'en Calco",
+    "municipi": "Campos",
+    "km": 5.11,
+    "sim": 0.72
+   },
+   {
+    "grafia": "Hort des Cotó",
+    "municipi": "ses Salines",
+    "km": 0.83,
+    "sim": 0.63
+   }
+  ]
+ },
+ {
+  "id": "B01_11",
+  "graf": "Pouet",
+  "nom": "Pouet",
+  "tipus": "altre",
+  "subtile": "",
+  "x": 2525,
+  "y": 1482,
+  "decision": "suggerit",
+  "candidates": [
+   {
+    "grafia": "es Pouet",
+    "municipi": "Marratxí",
+    "km": 10.07,
+    "sim": 1.0
+   },
+   {
+    "grafia": "es Putxet",
+    "municipi": "Llucmajor",
+    "km": 4.89,
+    "sim": 0.76
+   },
+   {
+    "grafia": "es Pou",
+    "municipi": "Llucmajor",
+    "km": 8.04,
+    "sim": 0.75
+   },
+   {
+    "grafia": "es Punxet",
+    "municipi": "Palma",
+    "km": 7.32,
+    "sim": 0.73
+   },
+   {
+    "grafia": "sa Roqueta",
+    "municipi": "Palma",
+    "km": 3.74,
+    "sim": 0.67
+   },
+   {
+    "grafia": "es Bosquet",
+    "municipi": "Llucmajor",
+    "km": 4.4,
+    "sim": 0.67
+   }
+  ]
+ },
+ {
+  "id": "B01_23",
+  "graf": "Cauallo",
+  "nom": "Cauallo",
+  "tipus": "altre",
+  "subtile": "",
+  "x": 3526,
+  "y": 1856,
+  "decision": "sense",
+  "candidates": [
+   {
+    "grafia": "Can Trujillo",
+    "municipi": "Calvià",
+    "km": 5.18,
+    "sim": 0.63
+   },
+   {
+    "grafia": "Cap des Falcó",
+    "municipi": "Calvià",
+    "km": 5.75,
+    "sim": 0.62
+   },
+   {
+    "grafia": "Cala Falcó",
+    "municipi": "Calvià",
+    "km": 5.62,
+    "sim": 0.59
+   },
+   {
+    "grafia": "Rota d'en Cabell",
+    "municipi": "Calvià",
+    "km": 4.57,
+    "sim": 0.56
+   },
+   {
+    "grafia": "Son Calafell",
+    "municipi": "Calvià",
+    "km": 9.71,
+    "sim": 0.63
+   },
+   {
+    "grafia": "Punta des Cavall",
+    "municipi": "Calvià",
+    "km": 4.38,
+    "sim": 0.53
+   }
+  ]
+ },
+ {
+  "id": "B03_2",
+  "graf": "Pūta dē Brorar",
+  "nom": "Pūta dē Brorar",
+  "tipus": "altre",
+  "subtile": "",
+  "x": 847,
+  "y": 428,
+  "decision": "suggerit",
+  "candidates": [
+   {
+    "grafia": "Punta Amer",
+    "municipi": "Sant Llorenç des Cardassar",
+    "km": 2.89,
+    "sim": 0.67
+   },
+   {
+    "grafia": "Punta des Correu",
+    "municipi": "Manacor",
+    "km": 6.92,
+    "sim": 0.7
+   },
+   {
+    "grafia": "Punta des Calador",
+    "municipi": "Sant Llorenç des Cardassar",
+    "km": 2.61,
+    "sim": 0.58
+   },
+   {
+    "grafia": "Punta des Carabiners",
+    "municipi": "Sant Llorenç des Cardassar",
+    "km": 3.29,
+    "sim": 0.59
+   },
+   {
+    "grafia": "Punta d'en Barrufau",
+    "municipi": "Manacor",
+    "km": 11.71,
+    "sim": 0.72
+   },
+   {
+    "grafia": "Ca sa Borina",
+    "municipi": "Sant Llorenç des Cardassar",
+    "km": 5.32,
+    "sim": 0.6
+   }
+  ]
+ },
+ {
+  "id": "B03_8",
+  "graf": "Cap del llibrel",
+  "nom": "Cap del llibrel",
+  "tipus": "altre",
+  "subtile": "",
+  "x": 668,
+  "y": 548,
+  "decision": "sense",
+  "candidates": [
+   {
+    "grafia": "Cap des Pinar",
+    "municipi": "Capdepera",
+    "km": 2.81,
+    "sim": 0.6
+   },
+   {
+    "grafia": "Cap Vermell",
+    "municipi": "Capdepera",
+    "km": 5.32,
+    "sim": 0.64
+   },
+   {
+    "grafia": "Coma des Llisar",
+    "municipi": "Capdepera",
+    "km": 5.54,
+    "sim": 0.64
+   },
+   {
+    "grafia": "Cap de sa Paret",
+    "municipi": "Sant Llorenç des Cardassar",
+    "km": 4.5,
+    "sim": 0.6
+   },
+   {
+    "grafia": "Can Siurell",
+    "municipi": "Son Servera",
+    "km": 7.38,
+    "sim": 0.64
+   },
+   {
+    "grafia": "Ca na Daniela",
+    "municipi": "Son Servera",
+    "km": 4.77,
+    "sim": 0.57
+   }
+  ]
+ },
+ {
+  "id": "B03_9",
+  "graf": "Cap de Gerani",
+  "nom": "Cap de Gerani",
+  "tipus": "altre",
+  "subtile": "",
+  "x": 340,
+  "y": 626,
+  "decision": "suggerit",
+  "candidates": [
+   {
+    "grafia": "Camp Gran",
+    "municipi": "Capdepera",
+    "km": 7.94,
+    "sim": 0.84
+   },
+   {
+    "grafia": "es Cau des Gegant",
+    "municipi": "Capdepera",
+    "km": 5.5,
+    "sim": 0.7
+   },
+   {
+    "grafia": "es Claperàs",
+    "municipi": "Capdepera",
+    "km": 7.48,
+    "sim": 0.67
+   },
+   {
+    "grafia": "es Claper",
+    "municipi": "Capdepera",
+    "km": 5.62,
+    "sim": 0.62
+   },
+   {
+    "grafia": "Camí des Govern",
+    "municipi": "Capdepera",
+    "km": 8.64,
+    "sim": 0.67
+   },
+   {
+    "grafia": "es Claper",
+    "municipi": "Capdepera",
+    "km": 6.17,
+    "sim": 0.62
+   }
+  ]
+ },
+ {
+  "id": "B04_8",
+  "graf": "Puig de les Mōias",
+  "nom": "Puig de les Mōias",
+  "tipus": "altre",
+  "subtile": "",
+  "x": 1134,
+  "y": 2062,
+  "decision": "suggerit",
+  "candidates": [
+   {
+    "grafia": "Puig de Maria",
+    "municipi": "Pollença",
+    "km": 1.86,
+    "sim": 0.8
+   },
+   {
+    "grafia": "Puig dels Moros",
+    "municipi": "Pollença",
+    "km": 7.7,
+    "sim": 0.85
+   },
+   {
+    "grafia": "Puig de la Madona",
+    "municipi": "Pollença",
+    "km": 3.53,
+    "sim": 0.76
+   },
+   {
+    "grafia": "Puig de les Moles",
+    "municipi": "Escorca",
+    "km": 9.81,
+    "sim": 0.85
+   },
+   {
+    "grafia": "Puig de la Casa",
+    "municipi": "sa Pobla",
+    "km": 5.57,
+    "sim": 0.77
+   },
+   {
+    "grafia": "Camí de Can Puig",
+    "municipi": "Pollença",
+    "km": 3.28,
+    "sim": 0.7
+   }
+  ]
+ },
+ {
+  "id": "B04_14",
+  "graf": "Cassellas",
+  "nom": "Cassellas",
+  "tipus": "altre",
+  "subtile": "",
+  "x": 1234,
+  "y": 2446,
+  "decision": "suggerit",
+  "candidates": [
+   {
+    "grafia": "les Cases Velles",
+    "municipi": "Pollença",
+    "km": 7.5,
+    "sim": 0.76
+   },
+   {
+    "grafia": "el Castellot",
+    "municipi": "Escorca",
+    "km": 2.83,
+    "sim": 0.67
+   },
+   {
+    "grafia": "ses Basses",
+    "municipi": "Escorca",
+    "km": 3.6,
+    "sim": 0.67
+   },
+   {
+    "grafia": "ses Covasses",
+    "municipi": "Escorca",
+    "km": 7.94,
+    "sim": 0.73
+   },
+   {
+    "grafia": "les Cases Velles",
+    "municipi": "Pollença",
+    "km": 10.49,
+    "sim": 0.76
+   },
+   {
+    "grafia": "Pla de Castella",
+    "municipi": "Pollença",
+    "km": 5.47,
+    "sim": 0.67
+   }
+  ]
+ },
+ {
+  "id": "B04_15",
+  "graf": "Ferulas",
+  "nom": "Ferulas",
+  "tipus": "altre",
+  "subtile": "",
+  "x": 1283,
+  "y": 2465,
+  "decision": "suggerit",
+  "candidates": [
+   {
+    "grafia": "ses Ferles",
+    "municipi": "Escorca",
+    "km": 11.32,
+    "sim": 0.88
+   },
+   {
+    "grafia": "es Ferros",
+    "municipi": "Escorca",
+    "km": 4.01,
+    "sim": 0.62
+   },
+   {
+    "grafia": "Ternellas",
+    "municipi": "Pollença",
+    "km": 6.7,
+    "sim": 0.62
+   },
+   {
+    "grafia": "s'Ullastre d'en Ferrer",
+    "municipi": "Escorca",
+    "km": 9.71,
+    "sim": 0.64
+   },
+   {
+    "grafia": "Font de la Teula",
+    "municipi": "Pollença",
+    "km": 9.19,
+    "sim": 0.59
+   },
+   {
+    "grafia": "Pla de la Figuera",
+    "municipi": "Pollença",
+    "km": 7.57,
+    "sim": 0.56
+   }
+  ]
+ },
+ {
+  "id": "B06_13",
+  "graf": "Cap dē Groller",
+  "nom": "Cap de Groller",
+  "tipus": "altre",
+  "subtile": "",
+  "x": 3316,
+  "y": 2626,
+  "decision": "suggerit",
+  "candidates": [
+   {
+    "grafia": "Cap des Fabioler",
+    "municipi": "Andratx",
+    "km": 4.93,
+    "sim": 0.7
+   },
+   {
+    "grafia": "Ca na Rosera",
+    "municipi": "Andratx",
+    "km": 8.63,
+    "sim": 0.72
+   },
+   {
+    "grafia": "Can Rodella",
+    "municipi": "Andratx",
+    "km": 6.72,
+    "sim": 0.64
+   },
+   {
+    "grafia": "Can Reboll",
+    "municipi": "Estellencs",
+    "km": 9.33,
+    "sim": 0.67
+   },
+   {
+    "grafia": "Can Rodella",
+    "municipi": "Andratx",
+    "km": 7.77,
+    "sim": 0.64
+   },
+   {
+    "grafia": "Cova d'en Garballó",
+    "municipi": "Andratx",
+    "km": 5.36,
+    "sim": 0.58
+   }
+  ]
+ }
+]

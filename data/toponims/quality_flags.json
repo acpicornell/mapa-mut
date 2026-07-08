@@ -1,0 +1,141 @@
+{
+ "B01_27": [
+  "short_single"
+ ],
+ "B02_15": [
+  "short_single",
+  "odd_char"
+ ],
+ "B02_19": [
+  "short_single"
+ ],
+ "B03_15": [
+  "short_single"
+ ],
+ "B04_1": [
+  "short_single"
+ ],
+ "B05_4": [
+  "short_single"
+ ],
+ "B06_1": [
+  "short_single"
+ ],
+ "B06_14": [
+  "short_single"
+ ],
+ "B04_4": [
+  "lower_start"
+ ],
+ "B05_11": [
+  "lower_start"
+ ],
+ "B05_21": [
+  "lower_start"
+ ],
+ "B05_24": [
+  "lower_start"
+ ],
+ "B01_3": [
+  "odd_char"
+ ],
+ "B01_14": [
+  "odd_char"
+ ],
+ "B01_25": [
+  "odd_char"
+ ],
+ "B02_2": [
+  "odd_char"
+ ],
+ "B02_3": [
+  "odd_char"
+ ],
+ "B02_4": [
+  "odd_char"
+ ],
+ "B02_6": [
+  "odd_char"
+ ],
+ "B02_7": [
+  "odd_char"
+ ],
+ "B02_8": [
+  "odd_char"
+ ],
+ "B02_10": [
+  "odd_char"
+ ],
+ "B02_12": [
+  "odd_char"
+ ],
+ "B02_13": [
+  "odd_char"
+ ],
+ "B03_1": [
+  "odd_char"
+ ],
+ "B03_2": [
+  "odd_char"
+ ],
+ "B03_3": [
+  "odd_char"
+ ],
+ "B03_5": [
+  "odd_char"
+ ],
+ "B03_6": [
+  "odd_char"
+ ],
+ "B03_18": [
+  "odd_char"
+ ],
+ "B03_19": [
+  "odd_char"
+ ],
+ "B03_20": [
+  "odd_char"
+ ],
+ "B03_21": [
+  "odd_char"
+ ],
+ "B04_7": [
+  "odd_char"
+ ],
+ "B04_8": [
+  "odd_char"
+ ],
+ "B04_10": [
+  "odd_char"
+ ],
+ "B04_13": [
+  "odd_char"
+ ],
+ "B05_5": [
+  "odd_char"
+ ],
+ "B05_10": [
+  "odd_char"
+ ],
+ "B05_13": [
+  "odd_char"
+ ],
+ "B05_14": [
+  "odd_char"
+ ],
+ "B05_16": [
+  "odd_char"
+ ],
+ "B05_28": [
+  "odd_char"
+ ],
+ "B06_3": [
+  "odd_char"
+ ],
+ "B06_4": [
+  "odd_char"
+ ],
+ "B06_12": [
+  "odd_char"
+ ]
+}

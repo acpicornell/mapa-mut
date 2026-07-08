@@ -11,22 +11,38 @@ result
 # Local Claude Code settings
 .claude/
 
-# ---- Data & generated artifacts: NOT versioned (code only) ----
-# Raw map scans (large images), the GIMP master, and every pipeline artifact
-# (detections, windows, NGIB gazetteer, GCP/review crops, overlays, the
-# toponym/match/curation JSON). All local, all regenerable by running the pipeline.
-data/
+# ---- Images / plots: NEVER versioned (anywhere) ----
+*.jpg
+*.jpeg
+*.png
+*.xcf
+*.dzi
 
-# Web data + generated visual assets (built by `npm run data` / `hero` / `map`).
+# ---- Raw scans + GIMP master (all images) ----
+data/raw/
+
+# ---- Large / regenerable pipeline artifacts (NOT the toponym JSONs) ----
+# Detection intermediates: tiles, per-tile JSON, detections, Approach-B windows.
+data/toponims/mapkurator/
+# NGIB gazetteer corpus (~36k rows) — regenerable with ngib-fetch.mjs.
+data/toponims/ngib/
+# GCP + review crops (images) and overlays.
+data/toponims/gcp-crops/
+data/toponims/review-crops/
+# Curation atomic-write artefacts (rolling .bak/.tmp on every save).
+data/toponims/curation.json.bak
+data/toponims/curation.json.tmp
+
+# The curated toponym data — data/toponims/*.json (toponims, matches, recheck,
+# gcps, curation, quality_flags, …) — IS versioned (small, the human work).
+
+# ---- Web generated data + visual assets (built by `npm run data`/`hero`/`map`) ----
 web/src/data/
 web/public/hero/
 web/public/map/
 web/public/vinetes/
 web/public/sheets/
 
-# Images / plots anywhere (kept out of the repo entirely)
-*.jpg
-*.jpeg
-*.png
-*.xcf
-*.dzi
+# Regenerable reports (not core data)
+data/toponims/review-data.json
+data/toponims/quality_report.json

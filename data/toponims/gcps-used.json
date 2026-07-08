@@ -1,0 +1,126 @@
+{
+ "model": "poly1",
+ "count": 12,
+ "gcps": [
+  {
+   "n": 2,
+   "x": 2156.4,
+   "y": 383.0,
+   "town": "Santanyí",
+   "lng": 3.128405,
+   "lat": 39.354326,
+   "src": "ngib",
+   "ngib_tipus": 917
+  },
+  {
+   "n": 4,
+   "x": 1340.0,
+   "y": 859.9,
+   "town": "Manacor",
+   "lng": 3.207746,
+   "lat": 39.569135,
+   "src": "ngib",
+   "ngib_tipus": 917
+  },
+  {
+   "n": 5,
+   "x": 2256.0,
+   "y": 769.3,
+   "town": "Campos",
+   "lng": 3.019679,
+   "lat": 39.430888,
+   "src": "ngib",
+   "ngib_tipus": 917
+  },
+  {
+   "n": 6,
+   "x": 649.2,
+   "y": 915.5,
+   "town": "Artà",
+   "lng": 3.351221,
+   "lat": 39.695146,
+   "src": "ngib",
+   "ngib_tipus": 917
+  },
+  {
+   "n": 7,
+   "x": 1925.2,
+   "y": 936.1,
+   "town": "Porreres",
+   "lng": 3.022374,
+   "lat": 39.516881,
+   "src": "ngib",
+   "ngib_tipus": 917
+  },
+  {
+   "n": 10,
+   "x": 1679.5,
+   "y": 1383.8,
+   "town": "Sineu",
+   "lng": 3.010511,
+   "lat": 39.644101,
+   "src": "ngib",
+   "ngib_tipus": 917
+  },
+  {
+   "n": 11,
+   "x": 2428.6,
+   "y": 1805.2,
+   "town": "Marratxí",
+   "lng": 2.750187,
+   "lat": 39.621832,
+   "src": "ngib",
+   "ngib_tipus": 917
+  },
+  {
+   "n": 14,
+   "x": 880.5,
+   "y": 1907.9,
+   "town": "Alcúdia",
+   "lng": 3.121134,
+   "lat": 39.852976,
+   "src": "ngib",
+   "ngib_tipus": 917
+  },
+  {
+   "n": 15,
+   "x": 2727.2,
+   "y": 1843.6,
+   "town": "Palma",
+   "lng": 2.650158,
+   "lat": 39.569326,
+   "src": "ngib",
+   "ngib_tipus": 917
+  },
+  {
+   "n": 17,
+   "x": 1064.9,
+   "y": 2139.0,
+   "town": "Pollença",
+   "lng": 3.014639,
+   "lat": 39.878376,
+   "src": "ngib",
+   "ngib_tipus": 917
+  },
+  {
+   "n": 18,
+   "x": 2100.9,
+   "y": 2300.0,
+   "town": "Sóller",
+   "lng": 2.715016,
+   "lat": 39.766082,
+   "src": "ngib",
+   "ngib_tipus": 917
+  },
+  {
+   "n": 19,
+   "x": 2575.1,
+   "y": 2326.3,
+   "town": "Valldemossa",
+   "lng": 2.621804,
+   "lat": 39.709089,
+   "src": "ngib",
+   "ngib_tipus": 917
+  }
+ ]
+}
