@@ -71,8 +71,8 @@
  },
  {
   "id": "B01_6",
-  "nom": "Can Pi",
-  "graf": "Cā Pi",
+  "nom": "Cª Pi",
+  "graf": "Cª Pi",
   "tipus": "altre",
   "ordre": null,
   "dubte": false,
@@ -869,16 +869,16 @@
  },
  {
   "id": "B03_12",
-  "nom": "Aguila",
-  "graf": "Aguila",
+  "nom": "Agulla",
+  "graf": "Agulla",
   "tipus": "Torre de senyals",
   "ordre": null,
   "dubte": false,
-  "decision": "posicional",
-  "review": "corregit",
+  "decision": "suggerit",
+  "review": "revisat",
   "ngib": "Cala Agulla",
   "municipi": "Capdepera",
-  "sim": 0.59,
+  "sim": 0.86,
   "km": 2.14
  },
  {

@@ -17,7 +17,8 @@
  },
  "B01_6": {
   "ngib": "Cala Pi",
-  "verdict": "pick"
+  "verdict": "pick",
+  "graf": "Cª Pi"
  },
  "B01_7": {
   "verdict": "ok",
@@ -317,7 +318,8 @@
   "verdict": "pick",
   "tipus": [
    "Torre de senyals"
-  ]
+  ],
+  "graf": "Agulla"
  },
  "B03_13": {
   "ngib": "Capdepera",
