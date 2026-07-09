@@ -18,6 +18,11 @@ result
 *.xcf
 *.dzi
 
+# Exception: self-hosted third-party libs/fonts are vendored so the site build
+# is self-contained (no runtime CDN dependency). Track everything under vendor/,
+# including its PNG sprites, overriding the *.png rule above.
+!web/public/vendor/**
+
 # ---- Raw scans + GIMP master (all images) ----
 data/raw/
 

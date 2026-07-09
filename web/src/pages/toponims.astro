@@ -149,11 +149,11 @@ const fmtKm = (k) => (k == null ? '' : `${k.toFixed(1)} km`);
     </div>
   </div>
 
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <script is:inline src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/openseadragon.min.js"></script>
+  <link rel="stylesheet" href={url('vendor/leaflet/leaflet.css')} />
+  <script is:inline src={url('vendor/leaflet/leaflet.js')}></script>
+  <script is:inline src={url('vendor/openseadragon/openseadragon.min.js')}></script>
 
-  <script is:inline define:vars={{ total: rows.length, DEC, TIP, REV, decOrder, dziUrl: url('map/mapa.dzi'), osdImg: 'https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/images/' }}>
+  <script is:inline define:vars={{ total: rows.length, DEC, TIP, REV, decOrder, dziUrl: url('map/mapa.dzi'), osdImg: url('vendor/openseadragon/images/') }}>
     (function () {
       const q = document.getElementById('q');
       const fdec = document.getElementById('fdec');

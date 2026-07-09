@@ -47,8 +47,8 @@ const colors = Object.fromEntries(Object.entries(DEC).map(([k, v]) => [k, v.colo
   <script type="application/json" id="pts" set:html={JSON.stringify(pts)}></script>
   <script type="application/json" id="cfg" set:html={JSON.stringify({ colors })}></script>
 
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <script is:inline src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <link rel="stylesheet" href={url('vendor/leaflet/leaflet.css')} />
+  <script is:inline src={url('vendor/leaflet/leaflet.js')}></script>
   <script is:inline>
     (function () {
       const pts = JSON.parse(document.getElementById('pts').textContent);

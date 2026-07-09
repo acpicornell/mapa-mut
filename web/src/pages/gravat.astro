@@ -4,7 +4,7 @@ import { url } from '../lib/url.mjs';
 
 const cfg = {
   dzi: url('map/mapa.dzi'),
-  osdImg: 'https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/images/',
+  osdImg: url('vendor/openseadragon/images/'),
 };
 ---
 <Base
@@ -129,7 +129,7 @@ const cfg = {
   </section>
 
   <script type="application/json" id="cfg" set:html={JSON.stringify(cfg)}></script>
-  <script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/openseadragon.min.js"></script>
+  <script is:inline src={url('vendor/openseadragon/openseadragon.min.js')}></script>
   <script is:inline>
     (function () {
       const cfg = JSON.parse(document.getElementById('cfg').textContent);
