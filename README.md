@@ -82,6 +82,11 @@ CUDA); `detect.sh` calls it. All repo content is in English.
 
 ## License
 
+- **Code** (the pipeline, the `web/` site, all scripts) — **© Antonio Picornell,
+  [AGPL-3.0-only](https://www.gnu.org/licenses/agpl-3.0.html)** (see [`LICENSE`](LICENSE)).
+  Strong copyleft with a network clause: anyone who uses, modifies, or runs this
+  code as a network service must release their complete source under the AGPL too,
+  keeping attribution.
 - **Toponym data** (`data/toponims/*.json` and the derived `web/src/data/`) —
   **© Antonio Picornell, [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/)**:
   free to reuse for non-commercial purposes **with attribution**. The attribution

@@ -3,6 +3,8 @@
   "type": "module",
   "version": "0.1.0",
   "description": "Static site for the map of Mallorca by Vicenç Mut (Insula Maioricae, 1683), on the single-sheet toponym pipeline",
+  "license": "AGPL-3.0-only",
+  "author": "Antonio Picornell",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
