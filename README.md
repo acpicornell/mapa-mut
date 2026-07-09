@@ -80,6 +80,16 @@ CUDA); `detect.sh` calls it. All repo content is in English.
 - [`mapkurator-text-spotting.md`](docs/mapkurator-text-spotting.md) — notes on the
   text-spotting detection step.
 
+## License
+
+- **Toponym data** (`data/toponims/*.json` and the derived `web/src/data/`) —
+  **© Antonio Picornell, [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/)**:
+  free to reuse for non-commercial purposes **with attribution**. The attribution
+  is also embedded inside the JSON so it travels with a copy. See
+  [`data/toponims/LICENSE.md`](data/toponims/LICENSE.md).
+- Canonical name forms come from the **NGIB** and keep their own terms; the
+  vendored web libraries/fonts keep theirs (see `web/public/vendor/`).
+
 ## Input data (`data/raw/`, hand-prepared in GIMP)
 
 - `Insula_Maioricae_Vicentius_Mut_1683.jpg` — the clean engraving.

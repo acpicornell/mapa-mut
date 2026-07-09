@@ -70,6 +70,15 @@ writeFileSync(
   join(OUT, 'toponims.json'),
   JSON.stringify(
     {
+      // Data license travels with the data: if this file is copied, the terms
+      // and the required attribution go with it. See data/toponims/LICENSE.md.
+      license: {
+        name: 'CC BY-NC 4.0',
+        url: 'https://creativecommons.org/licenses/by-nc/4.0/',
+        attribution:
+          'Topònims del mapa de Mallorca de Vicenç Mut (Insula Maioricae, 1683) — © Antonio Picornell',
+        note: 'Reuse allowed for non-commercial purposes with attribution.',
+      },
       font:
         "Topònims del mapa de Mallorca de Vicenç Mut (Insula Maioricae, 1683). " +
         "Pipeline d'un sol full: spotter mapKurator (Apple MPS) + lectura Claude vision + " +
