@@ -3,7 +3,7 @@ import { defineConfig } from 'astro/config';
 
 // Static site for the Mut 1683 single-sheet map.
 export default defineConfig({
-  site: 'https://example.com',
+  site: 'https://mut.corpusbalear.org',
   // Per desplegar a un subdirectori, descomenta i ajusta:
   // base: '/mapa-mut',
   build: {

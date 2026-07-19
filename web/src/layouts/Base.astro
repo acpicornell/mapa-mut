@@ -17,6 +17,34 @@ const nav = [
   { href: url('metode'), label: 'El mètode', match: base + '/metode' },
 ];
 const isCurrent = (m) => (m === (base || '') ? path === (base || '') : path === m || path.startsWith(m + '/'));
+
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const jsonld = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebSite',
+      '@id': 'https://mut.corpusbalear.org/#website',
+      url: 'https://mut.corpusbalear.org/',
+      name: 'Mapa de Mallorca de Vicenç Mut (1683)',
+      inLanguage: 'ca',
+      isPartOf: { '@type': 'CollectionPage', name: 'Corpus Balear', url: 'https://corpusbalear.org/' },
+    },
+    {
+      '@type': 'Dataset',
+      '@id': 'https://mut.corpusbalear.org/#dataset',
+      name: 'Topònims del mapa de Vicenç Mut (Insula Maioricae, 1683)',
+      description:
+        'Lectura, identificació i georeferenciació dels topònims gravats al mapa de Mallorca de Vicenç Mut (1683), enllaçats al Nomenclàtor Geogràfic de les Illes Balears (NGIB).',
+      inLanguage: 'ca',
+      creator: { '@type': 'Person', name: 'Antonio Picornell' },
+      license: 'https://creativecommons.org/licenses/by-nc/4.0/',
+      isBasedOn: { '@type': 'Map', name: 'Insula Maioricae', creator: { '@type': 'Person', name: 'Vicenç Mut' }, datePublished: '1683' },
+      isPartOf: { '@type': 'CollectionPage', name: 'Corpus Balear', url: 'https://corpusbalear.org/' },
+      spatialCoverage: { '@type': 'Place', name: 'Mallorca' },
+    },
+  ],
+};
 ---
 <!doctype html>
 <html lang="ca">
@@ -28,6 +56,9 @@ const isCurrent = (m) => (m === (base || '') ? path === (base || '') : path === 
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={desc} />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <link rel="canonical" href={canonical} />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonld)} />
     <link rel="stylesheet" href={url('vendor/fonts/fonts.css')} />
   </head>
   <body>
@@ -56,6 +87,8 @@ const isCurrent = (m) => (m === (base || '') ? path === (base || '') : path === 
           Dades dels topònims © Antonio Picornell ·
           <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a>
           (reutilització no comercial amb atribució).
+          <br />
+          Part del <a href="https://corpusbalear.org/">Corpus Balear</a> · edicions digitals de fonts històriques de les Illes Balears.
         </div>
         <div class="foot-links">
           <a href="https://github.com/acpicornell/mapa-mut" target="_blank" rel="noopener">
