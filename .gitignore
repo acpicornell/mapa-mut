@@ -43,7 +43,11 @@ data/toponims/curation.json.tmp
 
 # ---- Web generated data + visual assets (built by `npm run data`/`hero`/`map`) ----
 web/src/data/
-web/public/hero/
+web/public/hero/*
+# Exception: the built hero image IS versioned. Its source is a raw scan
+# (data/raw/, intentionally unversioned), so CI cannot regenerate it and the
+# deploy needs it present. Mirrors the web/public/vendor/** exception above.
+!web/public/hero/mapa-hero.jpg
 web/public/map/
 web/public/vinetes/
 web/public/sheets/

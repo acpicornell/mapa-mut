@@ -4,9 +4,10 @@ name: Deploy
 # branch. Requires a CLOUDFLARE_API_TOKEN repository secret. The guard step keeps
 # the run green while the secret is missing, so this workflow can be committed first.
 #
-# The build runs `astro build` directly (not `npm run build`) so it does not
-# re-run the `prebuild` data-generation scripts: the generated data is committed,
-# and this matches the local deploy flow.
+# The build regenerates the toponym data with `npm run data` (its source,
+# data/toponims/toponims.json, is versioned) and then runs `astro build`. It does
+# not run the full `prebuild` (which also rebuilds the hero from an unversioned
+# raw scan); the built hero image is versioned instead.
 
 on:
   push:
@@ -40,6 +41,7 @@ jobs:
         working-directory: web
         run: |
           npm ci
+          npm run data
           npx astro build
       - name: Deploy to Cloudflare Workers
         if: steps.guard.outputs.skip != 'true'
