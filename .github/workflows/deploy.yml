@@ -31,7 +31,8 @@ jobs:
       - uses: actions/setup-node@v4
         if: steps.guard.outputs.skip != 'true'
         with:
-          node-version: 20
+          # Wrangler v4 requires Node >= 22; the deploy step reuses this runtime.
+          node-version: 22
           cache: npm
           cache-dependency-path: web/package-lock.json
       - name: Install and build
