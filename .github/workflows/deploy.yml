@@ -1,0 +1,49 @@
+name: Deploy
+
+# Build the Astro site and deploy to Cloudflare Workers on push to the default
+# branch. Requires a CLOUDFLARE_API_TOKEN repository secret. The guard step keeps
+# the run green while the secret is missing, so this workflow can be committed first.
+#
+# The build runs `astro build` directly (not `npm run build`) so it does not
+# re-run the `prebuild` data-generation scripts: the generated data is committed,
+# and this matches the local deploy flow.
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check for Cloudflare token
+        id: guard
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          if [ -z "$CLOUDFLARE_API_TOKEN" ]; then
+            echo "No CLOUDFLARE_API_TOKEN secret set yet — skipping deploy."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          fi
+      - uses: actions/checkout@v4
+        if: steps.guard.outputs.skip != 'true'
+      - uses: actions/setup-node@v4
+        if: steps.guard.outputs.skip != 'true'
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - name: Install and build
+        if: steps.guard.outputs.skip != 'true'
+        working-directory: web
+        run: |
+          npm ci
+          npx astro build
+      - name: Deploy to Cloudflare Workers
+        if: steps.guard.outputs.skip != 'true'
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          wranglerVersion: "4.112.0"
+          workingDirectory: web
