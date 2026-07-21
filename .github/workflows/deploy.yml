@@ -10,8 +10,12 @@ name: Deploy
 # raw scan); the built hero image is versioned instead.
 
 on:
-  push:
-    branches: [main, master]
+  # Push-triggered auto-deploy is intentionally DISABLED for this Astro map.
+  # The deep-zoom map tiles (web/public/map) are generated from a large raw scan
+  # that is not versioned, so a clean CI checkout cannot reproduce the full site
+  # and would deploy a version missing the map. Deploy manually from a complete
+  # local checkout: `npm run deploy` (astro build + wrangler deploy). This
+  # workflow is kept for manual runs only.
   workflow_dispatch:
 
 jobs:
