@@ -1,5 +1,7 @@
 # El mapa de Mallorca de Vicenç Mut (1683)
 
+[![Deploy](https://github.com/acpicornell/mapa-mut/actions/workflows/deploy.yml/badge.svg)](https://github.com/acpicornell/mapa-mut/actions/workflows/deploy.yml)
+
 Outreach project around the *Insula Maioricae* — the map of Mallorca engraved by
 **Vicenç Mut** in **1683** (`data/raw/Insula_Maioricae_Vicentius_Mut_1683.jpg`).
 
