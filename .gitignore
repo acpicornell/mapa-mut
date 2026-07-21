@@ -48,7 +48,11 @@ web/public/hero/*
 # (data/raw/, intentionally unversioned), so CI cannot regenerate it and the
 # deploy needs it present. Mirrors the web/public/vendor/** exception above.
 !web/public/hero/mapa-hero.jpg
-web/public/map/
+# The built deep-zoom map (web/public/map: mapa.dzi + 255 tiles) IS versioned.
+# It is generated from an unversioned raw scan, so a clean CI checkout (or any
+# other machine) cannot rebuild it; committing it keeps the repo self-contained
+# and auto-deployable. Public-domain source. Overrides the *.jpeg/*.dzi rules.
+!web/public/map/**
 web/public/vinetes/
 web/public/sheets/
 
