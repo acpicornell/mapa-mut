@@ -3,6 +3,7 @@
 # Deploy: npm run deploy  (= astro build + wrangler deploy).
 name = "mapa-mut"
 compatibility_date = "2025-01-01"
+workers_dev = false
 
 [assets]
 directory = "./dist"
