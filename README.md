@@ -5,7 +5,7 @@
 Outreach project around the *Insula Maioricae* — the map of Mallorca engraved by
 **Vicenç Mut** in **1683** (`data/raw/Insula_Maioricae_Vicentius_Mut_1683.jpg`).
 
-**Live site:** <https://mapa-mut.cloudflare-d82.workers.dev>
+**Live site:** <https://mut.corpusbalear.org>
 
 Modelled on the [despuig](https://github.com/acpicornell/despuig) project (the
 1785 Cardinal Despuig map) but adapted to a **single-sheet** map — Mut's engraving
@@ -34,8 +34,12 @@ npm run dev         # http://localhost:4330
 npm run build       # → web/dist  (prebuild runs data + hero)
 ```
 
-Deploy = **Cloudflare Workers (Static Assets)** (build locally): `npm run deploy`
-(= build + `wrangler deploy`, config in `web/wrangler.toml`).
+Deploy = **Cloudflare Workers (Static Assets)**, automatic on push to the default branch
+(see `.github/workflows/deploy.yml`); manually with `npm run deploy` (= build +
+`wrangler deploy`, config in `web/wrangler.toml`). The generated deploy assets
+(`web/public/{map,hero}`) are versioned, so a clean checkout reproduces the whole site.
+Third-party libraries and fonts are self-hosted under `web/public/vendor/`, so the site
+loads no runtime CDN and can enforce the strict CSP in `web/public/_headers`.
 
 ## `scripts/toponims/review-server.mjs` — the curation tool (internal)
 
