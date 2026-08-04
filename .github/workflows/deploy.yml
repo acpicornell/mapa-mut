@@ -51,5 +51,6 @@ jobs:
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          wranglerVersion: "4.112.0"
+          # Keep in sync with the wrangler devDependency in web/package.json.
+          wranglerVersion: "4.118.0"
           workingDirectory: web
