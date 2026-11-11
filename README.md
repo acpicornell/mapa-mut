@@ -19,17 +19,18 @@ curation tool — plus the **data pipeline** that feeds them.
 ## `web/` — the public website (Astro, static)
 
 The published site: a filterable/sortable table of the **137** curated toponyms,
-an interactive **Mapa** (geographic layer + deep-zoom of the engraving), a page on
-the engraving itself (**El gravat**), the method, and statistics. Catalan UI;
+an interactive **Mapa** (geographic layer), a page on the engraving itself with a
+deep-zoom viewer (**El gravat**), the method, and statistics. Catalan UI;
 readings kept in their original 1683 spelling. It is **self-contained**: it only
-reads the versioned JSON under `web/src/data/`.
+reads the JSON under `web/src/data/`, generated from the versioned
+`data/toponims/` by `npm run data` (which CI runs before every build).
 
 ```bash
 cd web
 npm install
 npm run data        # build src/data/*.json from the pipeline output
 npm run hero        # homepage hero crop
-npm run map         # DZI tiles for the engraving deep-zoom on /mapa (slow; only when the master changes)
+npm run map         # DZI tiles for the engraving deep-zoom on /gravat and /toponims (slow; only when the master changes)
 npm run dev         # http://localhost:4330
 npm run build       # → web/dist  (prebuild runs data + hero)
 ```

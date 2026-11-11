@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 // Builds the home-page hero image: a wide crop of the Mut 1683 engraving from the
-// high-resolution master. Single sheet, no quadrants. Output is gitignored and
-// regenerable.
+// high-resolution master. Single sheet, no quadrants. Output is versioned (the
+// .gitignore re-includes web/public/hero/mapa-hero.jpg) because its raw-scan source
+// is not, so CI cannot regenerate it.
 //
 //   cd web && npm run hero
 

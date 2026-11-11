@@ -13,7 +13,6 @@
   --display: "Cinzel", "Trajan Pro", var(--serif);
   --maxw: 1180px;
   --on-accent: #fdf6e8;
-  --accent-edge: #6c281d;
   --veil: rgba(255,255,255,.35);
   --veil-2: rgba(255,255,255,.45);
   --veil-3: rgba(255,255,255,.6);
@@ -45,7 +44,6 @@
     --line: #4a3f30;
     --shadow: rgba(0, 0, 0, 0.45);
     --on-accent: #1a0f0a;
-    --accent-edge: #b8634c;
     --veil: rgba(255,255,255,.035);
     --veil-2: rgba(255,255,255,.05);
     --veil-3: rgba(255,255,255,.07);
@@ -73,7 +71,6 @@
   --line: #4a3f30;
   --shadow: rgba(0, 0, 0, 0.45);
   --on-accent: #1a0f0a;
-  --accent-edge: #b8634c;
   --veil: rgba(255,255,255,.035);
   --veil-2: rgba(255,255,255,.05);
   --veil-3: rgba(255,255,255,.07);
@@ -199,22 +196,6 @@ img { max-width: 100%; display: block; }
   border-radius: 4px;
   box-shadow: 0 1px 4px var(--shadow);
 }
-.tag {
-  display: inline-block; font-size: .82rem; letter-spacing: .02em;
-  background: var(--paper-2); border: 1px solid var(--line); color: var(--sepia);
-  padding: .12rem .55rem; border-radius: 999px; margin: 0 .25rem .35rem 0;
-}
 .lede { font-size: 1.25rem; color: var(--ink-soft); }
 .center { text-align: center; }
 .muted { color: var(--ink-soft); }
-.divider { border: 0; border-top: 1px solid var(--line); margin: 2rem 0; }
-
-/* botó */
-.btn {
-  display: inline-block; font-family: var(--display); font-size: .95rem;
-  background: var(--accent); color: var(--on-accent); text-decoration: none;
-  padding: .55rem 1.1rem; border-radius: 3px; border: 1px solid var(--accent-edge);
-  box-shadow: 0 1px 3px var(--shadow);
-}
-.btn:hover { background: var(--accent-soft); color: var(--on-accent); }
-.btn.ghost { background: transparent; color: var(--sepia); border-color: var(--line); }

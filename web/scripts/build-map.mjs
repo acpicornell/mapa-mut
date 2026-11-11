@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 // Builds the Deep Zoom (DZI) tiles of the Mut 1683 master for OpenSeadragon
 // (the "El gravat" viewer and the toponym-detail viewer). ONE image, ONE DZI —
-// no quadrants. Output is gitignored and regenerable; it is slow, so it is NOT
+// no quadrants. Output (web/public/map/**) is versioned, because its raw-scan source
+// is not, so CI cannot regenerate it; it is slow, so it is NOT
 // part of prebuild — run it when the master changes:
 //
 //   cd web && npm run map

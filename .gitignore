@@ -53,8 +53,6 @@ web/public/hero/*
 # other machine) cannot rebuild it; committing it keeps the repo self-contained
 # and auto-deployable. Public-domain source. Overrides the *.jpeg/*.dzi rules.
 !web/public/map/**
-web/public/vinetes/
-web/public/sheets/
 
 # Regenerable reports (not core data)
 data/toponims/review-data.json
