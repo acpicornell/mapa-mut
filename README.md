@@ -2,89 +2,55 @@
 
 [![Deploy](https://github.com/acpicornell/mapa-mut/actions/workflows/deploy.yml/badge.svg)](https://github.com/acpicornell/mapa-mut/actions/workflows/deploy.yml)
 
-Outreach project around the *Insula Maioricae* — the map of Mallorca engraved by
-**Vicenç Mut** in **1683** (`data/raw/Insula_Maioricae_Vicentius_Mut_1683.jpg`).
+Outreach edition of the *Insula Maioricae*, the map of Mallorca engraved by
+**Vicenç Mut** in **1683** (`data/raw/Insula_Maioricae_Vicentius_Mut_1683.jpg`):
+its place names are read off the engraving, curated by hand, georeferenced and
+matched against the NGIB gazetteer.
 
-**Live site:** <https://mut.corpusbalear.org>
+**Live site:** <https://mut.corpusbalear.org> — part of
+[Corpus Balear](https://corpusbalear.org).
+
+## What's in it
+
+- A filterable/sortable table of the **137** curated toponyms, readings kept in
+  their original 1683 spelling.
+- **Mapa** — an interactive geographic layer with every toponym.
+- **El gravat** — a page on the engraving itself with a deep-zoom viewer.
+- The method and statistics. Catalan UI.
+
+## How it was made
 
 Modelled on the [despuig](https://github.com/acpicornell/despuig) project (the
 1785 Cardinal Despuig map) but adapted to a **single-sheet** map — Mut's engraving
 is one plate, so there are no NW/NE/SE/SW quadrants and the whole island is
 georeferenced from one set of control points. It is also a simpler outreach site:
-no census, no town vignettes.
+no census, no town vignettes. A mapKurator text spotter finds the word boxes,
+vision reading groups them into names, and each toponym is hand-curated in an
+internal tool before being baked into the site's data.
 
-The repository holds **two applications** — a public website and an internal
-curation tool — plus the **data pipeline** that feeds them.
-
-## `web/` — the public website (Astro, static)
-
-The published site: a filterable/sortable table of the **137** curated toponyms,
-an interactive **Mapa** (geographic layer), a page on the engraving itself with a
-deep-zoom viewer (**El gravat**), the method, and statistics. Catalan UI;
-readings kept in their original 1683 spelling. It is **self-contained**: it only
-reads the JSON under `web/src/data/`, generated from the versioned
-`data/toponims/` by `npm run data` (which CI runs before every build).
+## Run locally
 
 ```bash
 cd web
 npm install
-npm run data        # build src/data/*.json from the pipeline output
-npm run hero        # homepage hero crop
-npm run map         # DZI tiles for the engraving deep-zoom on /gravat and /toponims (slow; only when the master changes)
-npm run dev         # http://localhost:4330
-npm run build       # → web/dist  (prebuild runs data + hero)
+npm run dev         # http://localhost:4330  (npm run build → web/dist)
 ```
 
-Deploy = **Cloudflare Workers (Static Assets)**, automatic on push to the default branch
-(see `.github/workflows/deploy.yml`); manually with `npm run deploy` (= build +
-`wrangler deploy`, config in `web/wrangler.toml`). The generated deploy assets
-(`web/public/{map,hero}`) are versioned, so a clean checkout reproduces the whole site.
-Third-party libraries and fonts are self-hosted under `web/public/vendor/`, so the site
-loads no runtime CDN and can enforce the strict CSP in `web/public/_headers`.
+The pipeline environment is a pinned Nix flake (`nix develop`). Every npm script,
+the deploy and the curation round are in the documentation below.
 
-## `scripts/toponims/review-server.mjs` — the curation tool (internal)
+## Documentation
 
-A local, single-file web app to hand-curate the toponyms. It is **not part of the
-deployed website**. Three views over the same data: **Taula** (editable grid),
-**Fitxes** (one toponym at a time with the engraving crop, NGIB candidates and a
-map), and **Mapa** (all toponyms on a geographic layer, coloured by confidence).
-All hand edits persist to a single `data/toponims/curation.json` overlay.
-
-```bash
-nix develop --command node scripts/toponims/review-server.mjs   # http://localhost:4400
-```
-
-After a curation round, **bake** and rebuild the website data:
-
-```bash
-nix develop --command python3 scripts/toponims/mapkurator/bake.py
-cd web && npm run data
-```
-
-## `scripts/toponims/` — the toponym pipeline
-
-The data engine. The whole island is worked as **one sheet**: GCPs from
-hand-marked dots → mapKurator spotter (Apple MPS) → Approach-B vision reading →
-assemble → single global georeference → NGIB gazetteer match. Quality is recorded
-on two orthogonal axes: **confidence** (`decision`) and **human review** (`review`).
-
-Full reproducible recipe: [`scripts/toponims/mapkurator/SHEET.md`](scripts/toponims/mapkurator/SHEET.md).
-Detection setup: [`scripts/toponims/mapkurator/README.md`](scripts/toponims/mapkurator/README.md).
-
-**Environment (Nix, reproducible).** One `flake.nix` with a pinned `flake.lock`
-provides the whole pipeline env (Python geometry/fuzzy/georef + Node). Enter it
-with `nix develop`. Text **detection** is delegated to the sibling Apple-Silicon
-port [`../mapkurator-mps`](https://github.com/acpicornell/mapkurator-mps) (no
-CUDA); `detect.sh` calls it. All repo content is in English.
-
-## `docs/` — background
-
-- [`vicenc-mut-1683-map.md`](docs/vicenc-mut-1683-map.md) — a cited research
+- [`docs/WEBSITE.md`](docs/WEBSITE.md) — the Astro site: npm scripts, generated
+  data, deploy to Cloudflare Workers, self-hosted vendor assets and CSP.
+- [`docs/PIPELINE.md`](docs/PIPELINE.md) — input data, the single-sheet toponym
+  pipeline and its Nix environment, and the internal curation tool.
+- [`docs/vicenc-mut-1683-map.md`](docs/vicenc-mut-1683-map.md) — a cited research
   dossier on Vicenç Mut and the 1683 *Insula Maioricae* (biography, authorship and
   engravers, the *Notarū Explicatio* legend, editions and holdings, and the map's
   place in Balearic cartography). It is the source of the historical text on the
   site's **El gravat** page.
-- [`mapkurator-text-spotting.md`](docs/mapkurator-text-spotting.md) — notes on the
+- [`docs/mapkurator-text-spotting.md`](docs/mapkurator-text-spotting.md) — notes on the
   text-spotting detection step.
 
 ## License
@@ -101,11 +67,3 @@ CUDA); `detect.sh` calls it. All repo content is in English.
   [`data/toponims/LICENSE.md`](data/toponims/LICENSE.md).
 - Canonical name forms come from the **NGIB** and keep their own terms; the
   vendored web libraries/fonts keep theirs (see `web/public/vendor/`).
-
-## Input data (`data/raw/`, hand-prepared in GIMP)
-
-- `Insula_Maioricae_Vicentius_Mut_1683.jpg` — the clean engraving.
-- `..._dots.jpg` — blue dots hand-marked on identifiable towns/capes → GCP source.
-- `..._boxes.jpg` — the same canvas with the sea/margins masked red and the dots
-  hidden → the input the spotter runs on (masking keeps sea noise out).
-- `..._1683.xcf` — the GIMP master with the layers.
