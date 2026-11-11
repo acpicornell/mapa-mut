@@ -134,16 +134,16 @@ const modelLabel = georef.model === 'poly1' ? 'afí (polinomi de primer grau)' :
   .steps { list-style: none; counter-reset: none; padding: 0; margin: 1.4rem 0; display: grid; gap: 1.4rem; }
   .steps > li { border-left: 2px solid var(--line); padding-left: 1.2rem; }
   .steps h3 { display: flex; align-items: center; gap: .6rem; margin: 0 0 .4rem; font-size: 1.2rem; }
-  .steps .n { display: inline-grid; place-items: center; width: 1.8rem; height: 1.8rem; border-radius: 50%; background: var(--accent); color: #fff; font-size: .95rem; flex: none; }
+  .steps .n { display: inline-grid; place-items: center; width: 1.8rem; height: 1.8rem; border-radius: 50%; background: var(--accent); color: var(--on-accent); font-size: .95rem; flex: none; }
   .steps p { margin: 0; }
 
   .chip { display: inline-flex; align-items: center; gap: .3rem; white-space: nowrap; margin: 0 .15rem; }
-  .chip i, .lab i { width: .75rem; height: .75rem; border-radius: 50%; display: inline-block; border: 1px solid rgba(40,30,20,.35); }
+  .chip i, .lab i { width: .75rem; height: .75rem; border-radius: 50%; display: inline-block; border: 1px solid var(--ink-hair); }
 
   .bars { display: grid; gap: .5rem; margin: .8rem 0 1rem; }
   .bar { display: grid; grid-template-columns: 9rem 1fr auto; align-items: center; gap: .8rem; font-size: .9rem; }
   .lab { display: inline-flex; align-items: center; gap: .4rem; }
-  .track { height: .7rem; background: rgba(40,30,20,.08); border-radius: 999px; overflow: hidden; }
+  .track { height: .7rem; background: var(--track); border-radius: 999px; overflow: hidden; }
   .fill { display: block; height: 100%; border-radius: 999px; }
   .val { color: var(--ink-soft); font-variant-numeric: tabular-nums; white-space: nowrap; }
 

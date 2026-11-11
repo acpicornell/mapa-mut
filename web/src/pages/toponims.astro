@@ -338,14 +338,14 @@ const fmtKm = (k) => (k == null ? '' : `${k.toFixed(1)} km`);
   .controls { display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; margin: 1.5rem 0 1rem; }
   .controls input, .controls select {
     font-family: var(--serif); font-size: 1rem; padding: .4rem .6rem;
-    border: 1px solid var(--line); border-radius: 4px; background: rgba(255,255,255,.6); color: var(--ink);
+    border: 1px solid var(--line); border-radius: 4px; background: var(--veil-3); color: var(--ink);
   }
   .controls input { flex: 1 1 240px; }
   .controls .clear { font-family: var(--serif); font-size: .9rem; padding: .4rem .7rem; border: 1px solid var(--line); border-radius: 4px; background: rgba(154,74,58,.1); color: var(--accent); cursor: pointer; }
-  .controls .clear:hover { background: rgba(154,74,58,.18); }
+  .controls .clear:hover { background: var(--clear-hover); }
   .count { margin-left: auto; font-size: .9rem; }
 
-  .tablewrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 4px; background: rgba(255,255,255,.35); }
+  .tablewrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 4px; background: var(--veil); }
   table { border-collapse: collapse; width: 100%; font-size: .96rem; }
   thead th { position: sticky; top: 0; background: var(--paper-2); text-align: left; font-family: var(--display); font-size: .82rem; letter-spacing: .03em; text-transform: uppercase; color: var(--sepia); padding: .55rem .7rem; border-bottom: 2px solid var(--line); }
   thead th.sortable { cursor: pointer; user-select: none; white-space: nowrap; }
@@ -353,8 +353,8 @@ const fmtKm = (k) => (k == null ? '' : `${k.toFixed(1)} km`);
   thead th[aria-sort="ascending"], thead th[aria-sort="descending"] { color: var(--accent); }
   .sar { font-size: .8em; }
   .ordtag { display: inline-block; margin-left: .35rem; font-size: .72rem; padding: .04rem .4rem; border-radius: 3px; background: rgba(63,122,138,.16); color: #2f5f6b; white-space: nowrap; }
-  td { padding: .4rem .7rem; border-bottom: 1px solid rgba(201,183,143,.4); vertical-align: top; }
-  tbody tr:hover { background: rgba(255,255,255,.5); }
+  td { padding: .4rem .7rem; border-bottom: 1px solid var(--line-tint-2); vertical-align: top; }
+  tbody tr:hover { background: var(--veil-hover); }
   .graf { font-weight: 500; }
   .dubte { color: var(--accent); font-weight: 700; margin-left: .2rem; }
   .num { text-align: right; white-space: nowrap; }
@@ -387,7 +387,7 @@ const fmtKm = (k) => (k == null ? '' : `${k.toFixed(1)} km`);
   .fx__meta { display: grid; grid-template-columns: auto 1fr; gap: .25rem .8rem; margin: 0 0 1rem; font-size: .92rem; }
   .fx__meta dt { color: var(--ink-soft); }
   .fx__meta dd { margin: 0; }
-  .fx__map { height: 170px; border-radius: 6px; overflow: hidden; border: 1px solid var(--line); background: #e9e2cf; }
+  .fx__map { height: 170px; border-radius: 6px; overflow: hidden; border: 1px solid var(--line); background: var(--plate-bg); }
   .fx__toggle { display: flex; align-items: center; gap: .45rem; margin: .8rem 0 0; font-size: .9rem; color: var(--ink-soft); cursor: pointer; }
   .fx__toggle input { cursor: pointer; }
   .fx__close { position: absolute; top: .4rem; right: .5rem; z-index: 2; width: 2rem; height: 2rem; border: 0; border-radius: 50%;

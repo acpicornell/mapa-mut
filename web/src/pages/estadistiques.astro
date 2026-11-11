@@ -182,11 +182,11 @@ const meanKm = withKm.length ? withKm.reduce((s, r) => s + r.km, 0) / withKm.len
   .bars { list-style: none; padding: 0; margin: .7rem 0 0; display: grid; gap: .35rem; }
   .bars li { display: grid; grid-template-columns: 9.5rem 1fr 3.2rem; align-items: center; gap: .6rem; font-size: .95rem; }
   .blab { text-align: right; color: var(--ink-soft); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .btrack { background: rgba(201,183,143,.35); border-radius: 3px; height: 1.05rem; overflow: hidden; }
+  .btrack { background: var(--line-tint); border-radius: 3px; height: 1.05rem; overflow: hidden; }
   .bfill { display: block; height: 100%; border-radius: 3px; min-width: 2px; }
   .bval { font-variant-numeric: tabular-nums; color: var(--ink); }
 
-  .gr { margin: .7rem 0 0; border: 1px solid var(--line); border-radius: 5px; overflow: hidden; background: rgba(255,255,255,.45); }
+  .gr { margin: .7rem 0 0; border: 1px solid var(--line); border-radius: 5px; overflow: hidden; background: var(--veil-2); }
   .gr > div { display: flex; justify-content: space-between; gap: 1rem; padding: .55rem .9rem; border-top: 1px solid var(--line); }
   .gr > div:first-child { border-top: 0; }
   .gr dt { color: var(--sepia); font-size: .9rem; }

@@ -85,7 +85,7 @@ const colors = Object.fromEntries(Object.entries(DEC).map(([k, v]) => [k, v.colo
       function initGeo() {
         if (geoReady) return; geoReady = true;
         map = L.map('geo', { scrollWheelZoom: true, preferCanvas: true }).setView([39.62, 2.98], 10);
-        const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© OpenStreetMap' });
+        const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© OpenStreetMap', className: 'osm-tiles' });
         const sat = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { maxZoom: 19, attribution: 'Esri, Maxar' });
         osm.addTo(map);
         L.control.layers({ 'Mapa': osm, 'Satèl·lit': sat }).addTo(map);
@@ -107,18 +107,18 @@ const colors = Object.fromEntries(Object.entries(DEC).map(([k, v]) => [k, v.colo
   .intro a { white-space: nowrap; }
 
   .controls { display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; margin: 1rem 0 .6rem; }
-  .controls input, .controls select { font-family: var(--serif); font-size: 1rem; padding: .4rem .6rem; border: 1px solid var(--line); border-radius: 4px; background: rgba(255,255,255,.6); color: var(--ink); }
+  .controls input, .controls select { font-family: var(--serif); font-size: 1rem; padding: .4rem .6rem; border: 1px solid var(--line); border-radius: 4px; background: var(--veil-3); color: var(--ink); }
   .controls input { flex: 1 1 240px; }
   .count { margin-left: auto; font-size: .9rem; }
 
   .legend { display: flex; flex-wrap: wrap; gap: .4rem 1rem; margin: 0 0 .8rem; font-size: .85rem; color: var(--ink-soft); }
   .lg { display: inline-flex; align-items: center; gap: .35rem; }
-  .lg i { width: .8rem; height: .8rem; border-radius: 50%; border: 1px solid rgba(40,30,20,.4); display: inline-block; }
+  .lg i { width: .8rem; height: .8rem; border-radius: 50%; border: 1px solid var(--ink-hair); display: inline-block; }
   .lg .ring { background: transparent; border: 2px solid #1d6b2a; }
   .lg.sep { border-left: 1px solid var(--line); padding-left: 1rem; }
   .small { margin: 0 0 .8rem; }
 
-  .mapbox { width: 100%; height: min(72vh, 760px); border: 1px solid var(--line); border-radius: 4px; background: #e9e2cf; }
+  .mapbox { width: 100%; height: min(72vh, 760px); border: 1px solid var(--line); border-radius: 4px; background: var(--plate-bg); }
 
   @media (max-width: 720px) { .count { margin-left: 0; } }
 </style>
